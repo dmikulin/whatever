@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head"></head>
+
+<body>
+	<nav th:replace="template :: nav"></nav>
+	<div class="container">
+		<div class="row">
+			<h1>Login</h1>
+		</div>
+		<div class="row">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4">
+				<p th:if="${loginError}" class="error">Wrong user or password or you do not have administrator privileges.</p>
+    			<form th:action="@{/login}" method="post">
+      				<label for="username">Username</label>:
+      				<input type="text" id="username" name="username" class="form-control" autofocus="autofocus" required="required" /> 
+      				<label for="password">Password</label>:
+      				<input type="password" id="password" class="form-control" name="password"  required="required" /> 
+      				<br/>
+      				<div style="margin-left:auto; margin-right:auto; text-align: center;">
+      					<input type="submit" value="Log in" class="btn btn-default" />
+      				</div>
+    			</form>
+    		</div>
+    	</div>
+    </div>
+	<div th:replace="template :: footer"></div>
+</body>
+</html>
