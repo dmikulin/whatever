@@ -72,7 +72,7 @@ public class InitialData implements ApplicationRunner {
 		
 		role = roleService.findById(3);
 		if (role == null) {
-			role = new Role("Unregistered user");
+			role = new Role("Unregistered userr");
 			roleService.save(role);
 		}
 
