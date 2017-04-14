@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head"></head>
+<link rel="stylesheet" type="text/css"  th:href="@{/css/datatables.min.css}"/>
+<body>
+	<nav th:replace="template :: nav"></nav>
+	<div class="container">
+		<h1>List of comments</h1>
+		<table class="table" id="comments">
+			<thead>
+				<tr>
+					<th>Article</th>
+					<th>Author</th>
+					<th>Comment</th>
+					<th style="text-align: center;">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="comment : ${comments}">
+					<td th:text="${comment.article.headline}"></td>
+       				<td th:text="${comment.author.firstName}+' '+${comment.author.lastName}"></td>
+       				<td th:utext="${comment.messageContent}"></td>
+       				<td style="margin-left: auto; margin-right:auto; text-align: center;">
+      					<form method="get" action="/comment-reply">
+							<input th:value="${comment.id}" type="hidden" name="id"/>
+							<button type="submit" class="btn btn-default btn-sm" style="width:86px;">Reply</button>
+						</form>
+						<form th:if="${comment.approved}" method="post" action="/comment-unapprove" >
+							<input th:value="${comment.id}" type="hidden" name="id"/>
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+							<button type="submit" class="btn btn-success btn-sm" style="width:86px;">Unapprove</button>
+						</form>
+						<form th:unless="${comment.approved}" method="post" action="/comment-approve" >
+							<input th:value="${comment.id}" type="hidden" name="id"/>
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+							<button type="submit" class="btn btn-warning btn-sm" style="width:86px;">Approve</button>
+						</form>
+						<form method="post" action="/comment-delete" >
+							<input th:value="${comment.id}" type="hidden" name="id"/>
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+							<button type="submit" class="btn btn-danger btn-sm" style="width:86px;">Delete</button>
+						</form>
+       				</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div th:replace="template :: footer"></div>
+	
+	<script type="text/javascript" th:src="@{/js/datatables.min.js}" ></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+	    	$('#comments').DataTable();
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head"></head>
+
+<body>
+	<nav th:replace="template :: nav"></nav>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4">
+				<h3 th:text="${status}"></h3>
+			</div>
+			<div class="col-sm-4"></div>
+		</div>
+    </div>
+	<div th:replace="template :: footer"></div>
+</body>
+</html>

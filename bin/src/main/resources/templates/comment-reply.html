@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head"></head>
+
+<body>
+	<nav th:replace="template :: nav"></nav>
+	<div class="container">
+		<div class="row">
+			<h1>Replay on comment</h1>
+			<form action="/comment-reply" method="post">
+				<div class="table-responsive">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td style="border:0px;">
+									 <label>Author:</label>
+									 <div th:text="${comment.author.firstName}+' '+${comment.author.lastName}"></div>
+								</td>
+							</tr>
+							<tr>
+								<td style="border:0px;">
+									<label>Message:</label>
+									<textarea class="form-control" rows="8" th:text="${comment.messageContent}" name="message" ></textarea>
+								</td>
+							</tr>
+							<tr>
+								<td style="border:0px;">
+									<input type="hidden" name="id" th:value="${comment.id}"/>
+									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+									<input type="submit" value="Send" class="btn btn-success"/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+	<div th:replace="template :: footer"></div>
+</body>
+</html>
