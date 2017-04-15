@@ -2,11 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head">
 	<meta charset="utf-8" />
-	<title>Restaurants</title>
+	<title>FOI Core</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
 	<link th:href="@{/css/styles.css}" rel="stylesheet" />
-	<title>Hello, Spring!</title>
 </head>
 <body>
 	<nav th:fragment="nav" class="navbar navbar-default navbar-fixed-top">
@@ -30,10 +29,6 @@
 				<ul class="nav navbar-nav">
 					<li sec:authorize="isAuthenticated()"><a href="/crud-role">CRUD Role</a></li>
 					<li sec:authorize="isAuthenticated()"><a href="/crud-user">CRUD User</a></li>
-					<sec:authorize access="hasRole('ADMINISTRATOR')"><a href="/crud-user">CRUD User</a></sec:authorize>
-					<li sec:authorize="isAuthenticated()"><a href="/crud-restaurant">CRUD Restaurant</a></li>
-					<li sec:authorize="isAuthenticated()"><a href="/crud-article">CRUD Article</a></li>
-					<li sec:authorize="isAuthenticated()"><a href="/comments">Comments</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li sec:authorize="isAnonymous()"><a href="/login">Log In</a></li>
@@ -56,7 +51,7 @@
 		<footer>
 			<div class="row">
 				<div class="col-lg-12">
-					<p>Copyright &copy; Matija Popijač 2017</p>
+					<p>Copyright &copy; Dejan Mikulinjak, Nino Žvorc 2017</p>
 				</div>
 			</div>
 		</footer>

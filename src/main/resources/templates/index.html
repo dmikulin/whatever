@@ -6,20 +6,7 @@
 	<nav th:replace="template :: nav"></nav>
 	<div class="container">
 		<div class="row">
-			<div class="list-group">
-				
-				<a th:each="article: ${articles}" th:href="'published-article?id='+${article.id}" class="list-group-item" style="clear:both; min-height:150px;">
-					<div class="row">
-						<div class="col-sm-3">
-					<img th:src="${article.imageLocation}" class="img-rounded img-responsive" />
-					</div>
-					<div class="col-sm-9">
-					<h4 th:text="${article.headline}" class="list-group-item-heading">Headline</h4>
-    				<p th:utext="${article.description}" class="list-group-item-text">Description </p>
-    				</div>
-					</div>
-				</a>
-			</div>
+
 		</div>
 	</div>
 
