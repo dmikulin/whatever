@@ -1,6 +1,5 @@
 package foi.core.whatever.controllers;
 
-import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +11,7 @@ public class IndexController {
 
 	@RequestMapping(value = "/*", method = RequestMethod.GET)
 	public String indexPage(Model model) {
-		List<String> articles = null;
-		model.addAttribute("articles", articles);
-		return "index";
+		return "redirect:/user-list";	
 	}
 
 }

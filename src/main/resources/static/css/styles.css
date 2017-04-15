@@ -1,9 +1,50 @@
 @CHARSET "UTF-8";
 
-body{
-	padding-top: 70px;
+#register .bad {
+	border-color: #FF0000;
 }
 
-label{
-	padding-top:10px;
+#register .goood {
+	border-color: limegreen;
+}
+
+#register .short {
+	color: #FF0000;
+}
+
+#register .weak {
+	color: orange;
+}
+
+#register .good {
+	color: #2D98F3;
+}
+
+#register .strong {
+	color: limegreen;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+main {
+    flex: 1 0 auto;
+  }
+  
+.myselect{
+	border: 0; 
+	border-bottom: 1px solid #9e9e9e;
+	background-color: transparent;
+}
+
+.notActive {
+   pointer-events: none;
+   cursor: default;
+}
+
+#receiptCarousel {
+	z-index: 1000;
 }

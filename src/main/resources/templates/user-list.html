@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head">
+
+</head>
+
+<body>
+	<div th:replace="template :: nav"></div>
+	<main>
+	<div class="container">
+		<div class="row">
+
+			<h5 class="center" >Users</h5>			
+			<div id="test1" class="col s12">
+				<table class="bordered highlight responsive-table col s12 l12 centered" id="users" >
+			        <thead>
+			          <tr>
+			              <th data-field="pp" ></th>
+			              <th data-field="no" >First name and Last name</th>
+			              <th data-field="document-date" >Username</th>
+			              <th data-field="travel-date" >E-mail</th>
+			          </tr>
+			        </thead>
+			
+			        <tbody>
+						<tr th:each="user : ${users}">
+		   					<td>Avatar</td>
+		   					<td th:text="${user.firstName}+' '+${user.lastName}"></td>
+		   					<td th:text="${user.username}"></td>
+		   					<td th:text="${user.email}"></td>
+						</tr>
+			        </tbody>
+		      	</table>
+		    </div>
+		    
+		    </div>
+		    <div class="row"></div>
+		</div>	
+	
+	</main>
+	<div th:replace="template :: footer" ></div>
+	<script th:src="@{/js/datatables.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+	    	$('#users').DataTable();
+	    	
+		});
+	</script>
+</body>
+</html>
