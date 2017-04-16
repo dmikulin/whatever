@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head">
+
+</head>
+
+<body>
+	<nav th:replace="template :: nav"></nav>
+	<main>			
+	<div class="container ">
+		<div class="row">
+				<h4 class="center" >New product</h4>		   		    	     
+				<div class="input-field col l1"></div>		    							
+			    <form class="col s12 l10" id="register" action="/signup" method="post" enctype="multipart/form-data" style="padding: 50px; padding-top:0; margin-top: 20px;">
+					<input type="hidden" th:name="${_csrf.parameterName}" id="csrf" th:value="${_csrf.token}"/>
+			    </form>
+		</div>
+	</div>
+	</main>
+	<div th:replace="template :: footer" id="main-wrapper" ></div>
+	<script th:src="@{/js/username-check.js}"></script>
+</body>
+</html>

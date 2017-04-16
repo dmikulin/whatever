@@ -35,7 +35,6 @@ public class Product {
 		setActive(true);
 	}
 
-
 	public int getProductId() {
 		return productId;
 	}
