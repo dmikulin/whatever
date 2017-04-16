@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import foi.core.whatever.model.User;
 import foi.core.whatever.services.UserService;
+import foi.core.whatever.model.Role;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -22,15 +23,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
-		User user = userService.findByUsernameOrEmail(usernameOrEmail);
-		if(user==null){
+		final User user = userService.findByUsernameOrEmailAndActive(usernameOrEmail, true);
+		if (user == null) {
 			return new org.springframework.security.core.userdetails.User(" ", " ", new HashSet<>());
 		}
-		
-		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-		grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().getName().toUpperCase()));
-		System.out.println(user.getRole().getName().toUpperCase());
-		return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),grantedAuthorities);
+		final Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+		for (final Role r : user.getRoles()) {
+			grantedAuthorities.add(new SimpleGrantedAuthority(r.getRoleName().toUpperCase()));
+		}
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
 	}
 
 }

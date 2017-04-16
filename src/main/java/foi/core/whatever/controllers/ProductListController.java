@@ -10,23 +10,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import foi.core.whatever.model.User;
-import foi.core.whatever.services.UserService;
+import foi.core.whatever.model.Product;
+import foi.core.whatever.services.ProductService;
 
 @Controller
-@RequestMapping("/admin")
-public class UserListController {
+public class ProductListController {
 	
 	@Autowired
-	private UserService userService;
+	private ProductService productService;
 	
-	@RequestMapping(value = "/user-list", method = RequestMethod.GET)
+	@RequestMapping(value = "/product-list", method = RequestMethod.GET)
 	public String userListPage(HttpServletRequest request, Model model) {
 
-		List<User> users = userService.findAll();
-		model.addAttribute("users", users);
+		List<Product> products = productService.findAll();
+		model.addAttribute("products", products);
 
-		return "user-list";	
+		return "product-list";	
 	}
 	
 }

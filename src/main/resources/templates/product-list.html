@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head">
+
+</head>
+
+<body>
+	<div th:replace="template :: nav"></div>
+	<main>
+	<div class="container">
+		<div class="row">
+
+			<h5 class="center" >Products</h5>			
+			<div id="test1" class="col s12">
+				<table class="bordered highlight responsive-table col s12 l12 centered" id="products" >
+			        <thead>
+			          <tr>
+			              <th data-field="no" >Product Number</th>
+			              <th data-field="name" >Name</th>
+			              <th data-field="price-eur" >Price EUR</th>
+			              <th data-field="price-usd" >Price USD</th>
+			              <th data-field="active" >Active</th>
+			          </tr>
+			        </thead>
+			
+			        <tbody>
+						<tr th:each="product : ${products}">
+		   					<td th:text="${product.productNumber}"></td>
+		   					<td th:text="${product.name}"></td>
+		   					<td th:text="${product.priceEUR}+'&euro;'"></td>
+		   					<td th:text="${product.priceUSD}+'$'"></td>
+		   					<td th:text="${product.active}"></td>
+						</tr>
+			        </tbody>
+		      	</table>
+		    </div>
+		    
+		    </div>
+		    <div class="row"></div>
+		</div>	
+	
+	</main>
+	<div th:replace="template :: footer" ></div>
+	<script th:src="@{/js/datatables.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+	    	$('#products').DataTable();
+	    	
+		});
+	</script>
+</body>
+</html>

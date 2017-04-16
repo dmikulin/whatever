@@ -2,18 +2,17 @@ package foi.core.whatever.repositoryes;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import foi.core.whatever.model.Role;
+import foi.core.whatever.model.User;
 
-public interface RoleRepository {
-	Role save(Role role);
+public interface RoleRepository extends JpaRepository<Role, Integer> {
 
-	List<Role> findAll();
+	Role findByRoleId(int roleId);
 
-	Role findById(int id);
+	Role findByRoleName(String roleName);
 
-	Role findByName(String name);
+	List<User> findUserByRoleId(int roleId);
 
-	int update(Role role);
-
-	int deleteById(int id);
 }

@@ -53,7 +53,7 @@ public class SignUpController {
 		user.setUsername(request.getParameter("username"));
 		user.setPassword(bCryptPasswordEncoder.encode(request.getParameter("password")));
 		user.setEmail(request.getParameter("email"));
-		user.setRole(roleService.findById(Integer.parseInt(request.getParameter("role"))));
+		user.addRoles(roleService.findByRoleName("User"));
 		userService.save(user);
 		
 		return "redirect:login";

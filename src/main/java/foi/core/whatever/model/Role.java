@@ -1,52 +1,69 @@
 package foi.core.whatever.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "roles")
+@Table(name="role")
 public class Role {
 
 	@Id
 	@GeneratedValue
-	@NotNull
-	@Column(name = "id", unique = true)
-	private int id;
-	@Column(name = "name")
-	private String name;
+	@Column(name="role_id")
+	private int roleId;
+	
+	@Column(name="name")
+	private String roleName;
+	
+	@ManyToMany(mappedBy="roles")
+	private List<User> users = new ArrayList<User>();
+	
+	@Column(name="active")
+	private boolean active;
 
 	public Role() {
+		super();
+		setActive(true);
 	}
 
-	public Role(String name) {
-		super();
-		this.name = name;
+	public int getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 	
-	public Role(int id, String name) {
-		super();
-		this.id = id;
-		this.name = name;
+	public boolean isActive() {
+		return active;
 	}
 
-	public int getId() {
-		return id;
+	public void setActive(boolean active) {
+		this.active = active;
 	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	
+	
 }

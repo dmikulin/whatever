@@ -11,7 +11,7 @@ public class IndexController {
 
 	@RequestMapping(value = "/*", method = RequestMethod.GET)
 	public String indexPage(Model model) {
-		return "redirect:/user-list";	
+		return "redirect:/product-list";	
 	}
 
 }

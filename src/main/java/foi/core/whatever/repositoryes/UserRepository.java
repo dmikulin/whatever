@@ -2,18 +2,23 @@ package foi.core.whatever.repositoryes;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
 import foi.core.whatever.model.User;
 
-public interface UserRepository {
-	User save(User user);
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-	List<User> findAll();
-
-	User findById(int id);
+	User findByUserId(int userId);
 
 	User findByUsername(String username);
 	
-	User findAdminByUsernameOrEmail(String usernameOrEmail);
+	List<User> findByActive(Boolean active);
+
+	User findByUsernameOrEmail(String username, String email);
+
+	@Query("select u from User u where (u.username =?1 or u.email = ?2) and u.active=?3")
+	User findByUsernameOrEmailAndActive(String username, String email, boolean active);
 
 	User findByEmail(String email);
 
@@ -21,9 +26,4 @@ public interface UserRepository {
 
 	User findByEmailAndPassword(String email, String password);
 
-	int update(User user);
-
-	int deleteById(int id);
-
-	User findByUsernameOrEmail(String usernameOrEmail);
 }

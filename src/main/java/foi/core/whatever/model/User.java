@@ -1,77 +1,54 @@
 package foi.core.whatever.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "users")
+@Table(name="user")
 public class User {
 
 	@Id
 	@GeneratedValue
 	@NotNull
-	@Column(name = "id", unique = true)
-	private int id;
-
-	@Column(name = "firstName")
+	@Column(name="user_id")
+	private int userId;
+	@Column(name="first_name")
 	private String firstName;
-	@Column(name = "lastName")
+	@Column(name="last_name")
 	private String lastName;
-	@Column(name = "username")
-	private String username;
-
-	@NotNull
-	@Column(name = "email", unique = true)
+	@Column(name="email")
 	private String email;
-
-	@Column(name = "password")
+	@Column(name="username")
+	private String username;
+	@Column(name="password")
 	private String password;
 
-	@ManyToOne
-	private Role role;
+	@ManyToMany(fetch=FetchType.EAGER)
+	private List<Role> roles = new ArrayList<Role>();
+
+	@Column(name="active")
+	private boolean active;
 
 	public User() {
-	}
-
-	public User(String firstName, String lastName, String email) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-	}
-	
-	public User(String firstName, String lastName, String username, String email, String password, Role role) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.role = role;
+		setActive(true);
 	}
 
-	public User(int id, String firstName, String lastName, String username, String email, String password, Role role) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.role = role;
+	public int getUserId() {
+		return userId;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getFirstName() {
@@ -90,20 +67,20 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -114,12 +91,26 @@ public class User {
 		this.password = password;
 	}
 
-	public Role getRole() {
-		return role;
+	public List<Role> getRoles() {
+		return roles;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
+
+	public void addRoles(Role role) {
+		this.roles.add(role);
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+
 
 }

@@ -16,8 +16,10 @@
 		
 		<ul class="side-nav" id="mobile-demo" style="z-index: 999;">
 			<li sec:authorize="isAuthenticated()" class="divider"></li>
-			<li sec:authorize="hasAuthority('ADMIN')"><a href="/crud-user" >All Users</a></li>
+			<li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/user-list" >All Users</a></li>
 			<li sec:authorize="hasAuthority('ADMIN')" class="divider"></li>
+			<li sec:authorize="isAuthenticated()"><a href="/product-list" >All Products</a></li>
+			<li sec:authorize="isAuthenticated()" class="divider"></li>
 			<li sec:authorize="isAnonymous()"><a href="/login" >Log In</a></li>
 			<li sec:authorize="isAnonymous()" class="divider"></li>
 			<li sec:authorize="isAnonymous()"><a href="/signup" >Sign Up</a></li>
@@ -33,15 +35,16 @@
 			<div class="navbar-fixed">
 		   		<nav class="nav-extended " style="background-color: #34495e" >
 					<div class="nav-wrapper ">
-      					<a style="margin-left: 20px;" href="#" class="brand-logo">Whatever</a>
+      					<a style="margin-left: 20px;" href="/index" class="brand-logo">Whatever</a>
 						<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 						<ul id="nav-mobile" class="right hide-on-med-and-down">
 							<li><a >EN</a></li>					    
-							<li><a >HR</a></li>
+							<li><a >RU</a></li>
 							<li sec:authorize="isAuthenticated()"><a sec:authentication="name" href='#' data-activates='userDrop' data-beloworigin="true" class='dropdown-button btn blue darken-2'  style="width: 150px; margin-left: 0" ></a></li>
 		          		</ul>
 		          		<ul id="nav-mobile" class="hide-on-med-and-down" style="margin-left: 170px;" >
-							<li sec:authorize="isAuthenticated()"><a href="/crud-user" >All Users</a></li>
+							<li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/user-list" >All Users</a></li>
+							<li sec:authorize="isAuthenticated()"><a href="/product-list" >All Products</a></li>
 							<li sec:authorize="isAnonymous()"><a href="/login" >Log In</a></li>
 							<li sec:authorize="isAnonymous()"><a href="/signup" >Sign Up</a></li>
 		          		</ul>
