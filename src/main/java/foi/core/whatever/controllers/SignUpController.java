@@ -38,13 +38,7 @@ public class SignUpController {
 		return "signup";
 	}
 
-	@RequestMapping(value = "/signup-error", method = RequestMethod.GET)
-	public String signupError(Model model) {
-		model.addAttribute("signupError", true);
-		return "signup";
-	}
-
-	@RequestMapping(value = "/signup-user", method = RequestMethod.POST)
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String SignUpUser(HttpServletRequest request, Model model) {
 
 		User user = new User();

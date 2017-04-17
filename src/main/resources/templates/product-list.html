@@ -9,10 +9,9 @@
 	<main>
 	<div class="container">
 		<div class="row">
-
-			<h4 class="center" >Products</h4>			
+			<h4 class="center topMargin" >Products</h4>			
 			<div id="test1" class="col s12">
-				<table class="bordered highlight responsive-table col s12 l12 centered" id="products" >
+				<table class="bordered highlight responsive-table col s12 l12 topMargin" id="products" >
 			        <thead>
 			          <tr>
 			              <th data-field="no" >Product Number</th>
@@ -41,13 +40,5 @@
 	
 	</main>
 	<div th:replace="template :: footer" ></div>
-	<script th:src="@{/js/datatables.min.js}"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			
-	    	$('#products').DataTable();
-	    	
-		});
-	</script>
 </body>
 </html>

@@ -20,12 +20,17 @@ public class ProductListController {
 	private ProductService productService;
 	
 	@RequestMapping(value = "/product-list", method = RequestMethod.GET)
-	public String userListPage(HttpServletRequest request, Model model) {
+	public String productListPage(HttpServletRequest request, Model model) {
 
 		List<Product> products = productService.findAll();
 		model.addAttribute("products", products);
 
 		return "product-list";	
+	}
+	
+	@RequestMapping(value = "/admin/product-list", method = RequestMethod.GET)
+	public String productListPageAdmin(HttpServletRequest request, Model model) {
+		return productListPage(request, model);
 	}
 	
 }

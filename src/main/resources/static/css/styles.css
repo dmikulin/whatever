@@ -45,6 +45,6 @@ main {
    cursor: default;
 }
 
-#receiptCarousel {
-	z-index: 1000;
+.topMargin {
+	margin-top: 20px;
 }
