@@ -1,7 +1,16 @@
 package foi.core.whatever.controllers;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +33,7 @@ public class NewProductController {
 	}
 
 	@RequestMapping(value = "/new-product", method = RequestMethod.POST)
-	public String SignUpUser(HttpServletRequest request, Model model) {
+	public String SignUpUser(HttpServletRequest request, Model model) throws ClientProtocolException, IOException {
 		
 		Product product = new Product();
 		product.setProductNumber(request.getParameter("product_no"));
@@ -33,6 +42,25 @@ public class NewProductController {
 		product.setPriceEUR( Double.parseDouble(request.getParameter("price_EUR")));
 		product.setPriceUSD( Double.parseDouble(request.getParameter("price_USD")));
 		productService.save(product);
+		
+		String url = "https://api.yaas.io/hybris/product/v2/milena/products";
+		String token = "Bearer 021-ca326413-bdbc-4e7f-b360-169542ecf082";
+		String json = "{\"name\":\""+product.getName()+"\",";
+		       json += "\"code\":\""+product.getProductNumber()+"\",";
+		       json += "\"description\":\""+product.getDescription()+"\"}";
+		
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpPost post = new HttpPost(url);
+		
+		post.setHeader("Authorization", token);
+		post.setHeader("Content-Language", "en");
+		post.setHeader("Content-Type", "application/json");
+		
+        HttpEntity entity = new ByteArrayEntity(json.getBytes("UTF-8"));
+		post.setEntity(entity);
+		HttpResponse response = client.execute(post);
+		
+		System.out.println("Response status: "+  response.getStatusLine().getStatusCode());
 		
 		return "redirect:product-list";
 	}

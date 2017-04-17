@@ -90,6 +90,12 @@
 		    <version>6.3.1</version>
 		</dependency>
 		
+		<dependency>
+		  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpclient</artifactId>
+		  <version>4.5.3</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
@@ -98,6 +104,22 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+<!-- 			<plugin>  -->
+<!-- 				<groupId>com.sap.cloud.yaas.service-sdk</groupId>         -->
+<!-- 				<artifactId>service-sdk-generator-maven-plugin</artifactId>    -->
+<!-- 				<executions>   -->
+<!-- 					<execution>  -->
+<!-- 						<id>1</id>  -->
+<!-- 						<goals>  -->
+<!-- 							<goal>generate-client</goal>  -->
+<!-- 						</goals>  -->
+<!-- 						<configuration>                                -->
+<!-- 							<sourceRamlUri>C:/Projects/sts-bundle/workplace/FoiCoreWhatever/api.raml</sourceRamlUri>              -->
+<!-- 							<basePackage>paket</basePackage>                      -->
+<!-- 						</configuration>         -->
+<!-- 					</execution>             -->
+<!-- 				</executions>                -->
+<!-- 			</plugin> -->
 		</plugins>
 	</build>
 
