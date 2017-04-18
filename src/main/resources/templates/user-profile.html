@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head">
+</head>
+
+<body>
+	<div th:replace="template :: nav"></div>
+	<main>	
+	<div class="container">
+		<div class="row">
+		    <div class="col s12">
+		      <ul id="tabs-swipe-demo" class="tabs ">
+		        <li class="tab"><a class="blue-text text-darken-2" href="#test1" >My profile</a></li>
+		        <li class="tab"><a class="blue-text text-darken-2" href="#test2" >Edit profile</a></li>
+		        <li class="tab"><a class="blue-text text-darken-2" href="#test3" >Change password</a></li>
+		      </ul>
+		    </div>
+		    <div id="test1" class="col s12">
+				<div class="row center">
+	              <img th:attr="src=@{${user.encodeBase64(user.avatar)}}" height="100" class="circle" /> 
+	            </div>
+				<div class="input-field col l3"></div>		  
+				<table class="col s12 m10 l6">			
+			        <tbody>			        
+			        	<tr>
+							<td><h5>Name:</h5></td>
+							<td ><h5 th:text="${user.firstName}+' '+${user.lastName}" ></h5></td>
+			          </tr>
+			          <tr>
+							<td><h5>Username:</h5></td>
+							<td ><h5 th:text="${user.username}" ></h5></td>
+			          </tr>			          
+			          <tr>
+							<td><h5>E-mail:</h5></td>
+							<td ><h5 th:text="${user.email}" ></h5></td>
+			          </tr>
+			          <tr>
+							<td><h5>Phone:</h5></td>
+							<td ><h5 th:text="${user.phone}" ></h5></td>
+			          </tr>
+			          <tr>
+				           	<td><h5>Roles:</h5></td>
+							<td ><h5 th:text="${user.getRolesString(user.roles)}" ></h5></td>
+			          </tr>				          
+			        </tbody>
+			      </table>
+			</div>
+			
+		    <div id="test2" class="col s12">
+				
+			</div>
+			
+		    <div id="test3" class="col s12">
+			    <div class="input-field col l3">  </div>			    	
+		    	<form class="col s12 m10 l6" id="change-pass" action="/change-pass" method="post" style="padding: 50px; padding-top:0; margin-top: 20px;">
+			    	<h4 class="center">Change password</h4>		   		    	     
+			    	<br/>
+				      <div class="row">
+				      	<div class="input-field col s12 l12">
+				          <input id="old-password" name="old-password" type="password" class="validate" />
+				          <label for="old-password" >Old password</label>		          
+				        </div>
+				        <div class="input-field col s12 l12">
+				          <input id="password" name="password" pattern=".{6,}"  type="password" class="validate" />
+				          <label for="password" th:attr="data-error=#{your-profile.content.password.error_message},data-success=#{your-profile.content.password.success}" >Password</label>		          
+				        </div>
+				        <div class="input-field col s12 l12" style="margin-top: 0;" >
+				        	<span id="strengthResult" ></span> 
+				        </div>
+				        <div class="input-field col s12 l12">
+				          <input id="confirm_password" name="confirm_password" type="password" class="validate" />
+				          <label for="confirm_password" th:attr="data-error=#{your-profile.content.confirm_password.error_message},data-success=#{your-profile.content.confirm_password.success}" >Confirm password</label>
+				        </div>
+				      </div>
+				       <div class="row center">	
+			      		<div class="input-field col s12 l12">
+							<button class="btn waves-effect waves-light  blue darken-2" type="submit" name="action" >Confirm</button>
+						</div>	
+					</div>		
+					<input type="hidden" th:name="${_csrf.parameterName}" id="csrf" th:value="${_csrf.token}"/>
+			    </form>
+		    </div>
+		    
+		</div>
+	</div>
+	</main>	
+	<div th:replace="template :: footer" ></div>
+	
+	<script type="text/javascript">
+	
+		$(document).ready(function(){
+		    $('ul.tabs').tabs();
+		  });
+		
+		var password = document.getElementById("password");
+		var confirm_password = document.getElementById("confirm_password");
+	
+		function validatePassword(){
+		  if(password.value != confirm_password.value) {
+		    confirm_password.setCustomValidity("Passwords Don't Match");
+		  } else {
+		    confirm_password.setCustomValidity('');
+		  }
+		}
+		password.onchange = validatePassword;
+		confirm_password.onkeyup = validatePassword;
+		
+	</script>
+	<script th:src="@{/js/username-check.js}"></script>
+</body>
+</html>

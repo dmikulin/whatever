@@ -1,5 +1,9 @@
 package foi.core.whatever;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -42,14 +46,42 @@ public class InitialData implements ApplicationRunner {
 		role.setRoleName("User");
 		roleService.save(role);
 		
+		ClassLoader classLoader = getClass().getClassLoader();
+
+		File file = new File(classLoader.getResource("static/img/admin-avatar.png").getFile());
+		byte[] byteFile = new byte[(int)file.length()];
+
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(file);
+			fis.read(byteFile);
+			fis.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
 		User user = new User();
 		user.setEmail("admin@email.com");
 		user.setFirstName("Adminko");
 		user.setLastName("Administratoric");
 		user.setPassword(bCryptPasswordEncoder.encode("admin"));
 		user.setUsername("admin");
+		user.setPhone("098 511 1517");
 		user.addRoles(roleService.findByRoleName("Admin"));
+		user.addRoles(roleService.findByRoleName("User"));
+		user.setAvatar(byteFile);
 		userService.save(user);		
+		
+		file = new File(classLoader.getResource("static/img/default-avatar.png").getFile());
+		byte[] byteFile1 = new byte[(int)file.length()];
+
+		try {
+			fis = new FileInputStream(file);
+			fis.read(byteFile1);
+			fis.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		
 		user = new User();
 		user.setEmail("ihorvat@email.com");
@@ -57,7 +89,9 @@ public class InitialData implements ApplicationRunner {
 		user.setLastName("Horvat");
 		user.setPassword(bCryptPasswordEncoder.encode("ihorvat"));
 		user.setUsername("ihorvat");
+		user.setPhone("098 594 5197");
 		user.addRoles(roleService.findByRoleName("User"));
+		user.setAvatar(byteFile1);
 		userService.save(user);
 		
 		Product product = new Product();

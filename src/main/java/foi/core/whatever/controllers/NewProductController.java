@@ -44,7 +44,8 @@ public class NewProductController {
 		productService.save(product);
 		
 		String url = "https://api.yaas.io/hybris/product/v2/milena/products";
-		String token = "Bearer 021-ca326413-bdbc-4e7f-b360-169542ecf082";
+		String token = "Bearer 022-c1169181-7cdd-4da1-936e-9d38797f6cb8";
+		
 		String json = "{\"name\":\""+product.getName()+"\",";
 		       json += "\"code\":\""+product.getProductNumber()+"\",";
 		       json += "\"description\":\""+product.getDescription()+"\"}";

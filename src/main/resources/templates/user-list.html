@@ -15,18 +15,23 @@
 			        <thead>
 			          <tr>
 			              <th data-field="pp" ></th>
-			              <th data-field="no" >First name and Last name</th>
-			              <th data-field="document-date" >Username</th>
-			              <th data-field="travel-date" >E-mail</th>
+			              <th data-field="name" >Name</th>
+			              <th data-field="username" >Username</th>
+			              <th data-field="email" >E-mail</th>
+			              <th data-field="phone" >Phone</th>
+			              <th data-field="roles" >Roles</th>
+			              <th data-field="roles" >Active/Deactive</th>
 			          </tr>
 			        </thead>
 			
 			        <tbody>
 						<tr th:each="user : ${users}">
-		   					<td>Avatar</td>
+		   					<td><img th:attr="src=@{${user.encodeBase64(user.avatar)}}" height="50px;" class="circle" /></td>
 		   					<td th:text="${user.firstName}+' '+${user.lastName}"></td>
 		   					<td th:text="${user.username}"></td>
 		   					<td th:text="${user.email}"></td>
+		   					<td th:text="${user.phone}"></td>
+		   					<td th:text="${user.getRolesString(user.roles)}"></td>
 						</tr>
 			        </tbody>
 		      	</table>

@@ -8,9 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.lowagie.text.pdf.codec.Base64;
 
 @Entity
 @Table(name="user")
@@ -27,6 +30,8 @@ public class User {
 	private String lastName;
 	@Column(name="email")
 	private String email;
+	@Column(name="phone")
+	private String phone;
 	@Column(name="username")
 	private String username;
 	@Column(name="password")
@@ -34,7 +39,11 @@ public class User {
 
 	@ManyToMany(fetch=FetchType.EAGER)
 	private List<Role> roles = new ArrayList<Role>();
-
+	
+	@Lob
+	@Column(name="avatar", columnDefinition="mediumblob")
+	private byte[] avatar;
+	
 	@Column(name="active")
 	private boolean active;
 
@@ -75,6 +84,14 @@ public class User {
 		this.email = email;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public String getUsername() {
 		return username;
 	}
@@ -111,6 +128,23 @@ public class User {
 		this.active = active;
 	}
 
+	public String getRolesString(List<Role> roles){
+		String rolesString="";
+		for(Role role: roles) {
+			rolesString += role.getRoleName()+" ";
+		}
+		return rolesString;
+	}
+	
+	public byte[] getAvatar() {
+		return avatar;
+	}
 
+	public void setAvatar(byte[] avatar) {
+		this.avatar = avatar;
+	}
 
+	public String encodeBase64(byte[] picture){
+		return "data:image/png;base64," + Base64.encodeBytes(picture);
+	}
 }
