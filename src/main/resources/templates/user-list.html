@@ -7,40 +7,85 @@
 <body>
 	<div th:replace="template :: nav"></div>
 	<main>
-	<div class="container">
-		<div class="row">
-			<h4 class="center topMargin" >Users</h4>			
-			<div id="test1" class="col s12">
-				<table class="bordered highlight responsive-table col s12 l12 topMargin" id="users" >
-			        <thead>
-			          <tr>
-			              <th data-field="pp" ></th>
-			              <th data-field="name" >Name</th>
-			              <th data-field="username" >Username</th>
-			              <th data-field="email" >E-mail</th>
-			              <th data-field="phone" >Phone</th>
-			              <th data-field="roles" >Roles</th>
-			              <th data-field="roles" >Active/Deactive</th>
-			          </tr>
-			        </thead>
-			
-			        <tbody>
-						<tr th:each="user : ${users}">
-		   					<td><img th:attr="src=@{${user.encodeBase64(user.avatar)}}" height="50px;" class="circle" /></td>
-		   					<td th:text="${user.firstName}+' '+${user.lastName}"></td>
-		   					<td th:text="${user.username}"></td>
-		   					<td th:text="${user.email}"></td>
-		   					<td th:text="${user.phone}"></td>
-		   					<td th:text="${user.getRolesString(user.roles)}"></td>
-						</tr>
-			        </tbody>
-		      	</table>
-		    </div>
-		    
-		    </div>
-		    <div class="row"></div>
+		<div class="container">
+			<div class="col s12">
+		      	<ul id="tabs-swipe-demo" class="tabs orange-text">
+			        <li class="tab" >
+			        	<a th:if="${active==1}" class="active blue-text text-darken-2" href="#test1" >Active users</a>
+			        	<a th:unless="${active==1}" class="blue-text text-darken-2" href="#test1" >Active users</a>
+			        </li>
+			        <li class="tab" >
+				        <a th:if="${active==2}" class="active blue-text text-darken-2" href="#test2" >Deactivated users</a>
+				        <a th:unless="${active==2}" class="blue-text text-darken-2" href="#test2" >Deactivated users</a>
+			        </li>
+		      	</ul>
+	    	</div>
+			<div class="row"></div>
+			<div class="row"></div>
+			<div class="row">
+				<div id="test1" class="col s12">
+					<table class="bordered highlight responsive-table col s12 l12 topMargin" id="users" >
+				        <thead>
+				          <tr>
+				              <th data-field="pp" ></th>
+				              <th data-field="name" >Name</th>
+				              <th data-field="username" >Username</th>
+				              <th data-field="email" >E-mail</th>
+				              <th data-field="phone" >Phone</th>
+				              <th data-field="roles" >Roles</th>
+				              <th class="center" data-field="roles" >Deactivate</th>
+				          </tr>
+				        </thead>
+				
+				        <tbody>
+							<tr th:each="user : ${activeUsers}">
+			   					<td><img th:attr="src=@{${user.encodeBase64(user.avatar)}}" height="50px;" class="circle" /></td>
+			   					<td th:text="${user.firstName}+' '+${user.lastName}"></td>
+			   					<td th:text="${user.username}"></td>
+			   					<td th:text="${user.email}"></td>
+			   					<td th:text="${user.phone}"></td>
+			   					<td th:text="${user.getRolesString(user.roles)}"></td>
+			   					<td class="center" >
+			   						<a th:if="${user.hasAdminRole(user.roles)}" class="btn-floating btn-small green" ><i class="material-icons">verified_user</i></a>
+			   						<a th:unless="${user.hasAdminRole(user.roles)}" class="btn-floating btn-small red" th:href="'/admin/deactivate-user/'+${user.userId}" ><i class="material-icons">power_settings_new</i></a>
+			   					</td>
+							</tr>
+				        </tbody>
+			      	</table>
+			    </div>		    
+				<div id="test2" class="col s12">
+					<table th:if="${not #lists.isEmpty(deactiveUsers)}" class="bordered highlight responsive-table col s12 l12 topMargin" id="users" >
+				        <thead>
+				          <tr>
+				              <th data-field="pp" ></th>
+				              <th data-field="name" >Name</th>
+				              <th data-field="username" >Username</th>
+				              <th data-field="email" >E-mail</th>
+				              <th data-field="phone" >Phone</th>
+				              <th data-field="roles" >Roles</th>
+				              <th class="center" data-field="roles" >Activate</th>
+				          </tr>
+				        </thead>
+				
+				        <tbody>
+							<tr th:each="user : ${deactiveUsers}">
+			   					<td><img th:attr="src=@{${user.encodeBase64(user.avatar)}}" height="50px;" class="circle" /></td>
+			   					<td th:text="${user.firstName}+' '+${user.lastName}"></td>
+			   					<td th:text="${user.username}"></td>
+			   					<td th:text="${user.email}"></td>
+			   					<td th:text="${user.phone}"></td>
+			   					<td th:text="${user.getRolesString(user.roles)}"></td>
+			   					<td class="center" >
+			   						<a class="btn-floating btn-small green" th:href="'/admin/activate-user/'+${user.userId}" ><i class="material-icons">power_settings_new</i></a>
+			   					</td>
+							</tr>
+				        </tbody>
+			      	</table>
+			      	<h5 th:if="${#lists.isEmpty(deactiveUsers)}" class="center" >There is no deactivated users!</h5>		   		    	     
+			      	
+			    </div>		    
+			</div>		
 		</div>	
-	
 	</main>
 	<div th:replace="template :: footer" ></div>
 </body>

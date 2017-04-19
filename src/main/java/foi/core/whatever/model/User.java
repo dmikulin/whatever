@@ -16,35 +16,35 @@ import javax.validation.constraints.NotNull;
 import com.lowagie.text.pdf.codec.Base64;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User {
 
 	@Id
 	@GeneratedValue
 	@NotNull
-	@Column(name="user_id")
+	@Column(name = "user_id")
 	private int userId;
-	@Column(name="first_name")
+	@Column(name = "first_name")
 	private String firstName;
-	@Column(name="last_name")
+	@Column(name = "last_name")
 	private String lastName;
-	@Column(name="email")
+	@Column(name = "email")
 	private String email;
-	@Column(name="phone")
+	@Column(name = "phone")
 	private String phone;
-	@Column(name="username")
+	@Column(name = "username")
 	private String username;
-	@Column(name="password")
+	@Column(name = "password")
 	private String password;
 
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Role> roles = new ArrayList<Role>();
-	
+
 	@Lob
-	@Column(name="avatar", columnDefinition="mediumblob")
+	@Column(name = "avatar", columnDefinition = "mediumblob")
 	private byte[] avatar;
-	
-	@Column(name="active")
+
+	@Column(name = "active")
 	private boolean active;
 
 	public User() {
@@ -128,14 +128,23 @@ public class User {
 		this.active = active;
 	}
 
-	public String getRolesString(List<Role> roles){
-		String rolesString="";
-		for(Role role: roles) {
-			rolesString += role.getRoleName()+" ";
+	public String getRolesString(List<Role> roles) {
+		String rolesString = "";
+		for (Role role : roles) {
+			rolesString += role.getRoleName() + " ";
 		}
 		return rolesString;
 	}
-	
+
+	public boolean hasAdminRole(List<Role> roles) {
+		for (Role role : roles) {
+			if (role.getRoleName().equals("Admin")){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public byte[] getAvatar() {
 		return avatar;
 	}
@@ -144,7 +153,7 @@ public class User {
 		this.avatar = avatar;
 	}
 
-	public String encodeBase64(byte[] picture){
+	public String encodeBase64(byte[] picture) {
 		return "data:image/png;base64," + Base64.encodeBytes(picture);
 	}
 }
