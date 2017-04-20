@@ -47,13 +47,54 @@
 			</div>
 			
 		    <div id="test2" class="col s12">
-				
+			<div class="row"></div>	
+			<div class="row"></div>		
+			<div class="row">	
+			<div class="input-field col l1"></div>		    							
+		    <form class="col s12 l10" id="register" action="/edit-profile" method="post" style="padding: 50px; padding-top:0; margin-top: 20px;">
+		    	
+				<div class="row">
+					<div class="input-field col s12 l6">
+						<input id="firstName" name="firstName" type="text" data-length="20" class="validate" required="required" th:value="${user.firstName}" />
+						<label for="firstName" data-error="Wrong!" data-success="Right"  >First Name</label>
+					</div>
+					<div class="input-field col s12 l6">
+						<input id="lastName" name="lastName" type="text" data-length="30" class="validate" required="required" th:value="${user.lastName}" />
+						<label for="lastName" data-error="Wrong!" data-success="Right" >Last Name</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12 l4">
+				    	<input id="username" name="username" pattern=".{5,}" type="text" class="validate" th:value="${user.username}" />
+				    	<label for="username" data-error="Ussername is too short!" data-success="Right" >Username</label>
+						<span id="usernameResult" ></span>
+					</div>		        
+				   	<div class="input-field col s12 l4">
+				   		<input id="email" name="email" type="email" class="validate" th:value="${user.email}" />
+				     	<label for="email" data-error="Email is not valid!" data-success="Right">Email</label>
+				   	</div>
+				   	<div class="input-field col s12 l4">
+				   		<input id="phone" name="phone" type="text" class="validate" th:value="${user.phone}"/>
+				     	<label for="phone" data-error="Phone is not valid!" data-success="Right">Phone</label>
+				   	</div>
+				</div>
+
+				<div class="row">	
+			    	<div class="input-field col s12 l4">
+						<button class="btn waves-effect waves-light blue darken-2" type="submit" name="action" >Register<i class="material-icons right">send</i></button>
+					</div>	
+					<div class="input-field col s12 l6">
+						<button type="reset" class="waves-effect btn-flat waves-light grey lighten-3" >Clean form</button>						
+					</div>						
+				</div>		
+				<input type="hidden" th:name="${_csrf.parameterName}" id="csrf" th:value="${_csrf.token}"/>
+		    </form>
+		  </div>
 			</div>
 			
 		    <div id="test3" class="col s12">
 			    <div class="input-field col l3">  </div>			    	
 		    	<form class="col s12 m10 l6" id="change-pass" action="/change-pass" method="post" style="padding: 50px; padding-top:0; margin-top: 20px;">
-			    	<h4 class="center">Change password</h4>		   		    	     
 			    	<br/>
 				      <div class="row">
 				      	<div class="input-field col s12 l12">

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,16 +36,55 @@ public class UserProfileController {
 		User user = userService.findByUsername(username);
 		model.addAttribute("user", user);
 
-
 		return "user-profile";
 	}
 
 	@RequestMapping(value = "/edit-profile", method = RequestMethod.POST)
 	public String editProfile(HttpServletRequest request, HttpServletResponse response, Model model) {
 
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		User user = userService.findByUsername(auth.getName());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findByUsername(auth.getName());
 
+		boolean usernameChanged = false;
+		List<String> errors = new ArrayList<>();
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String telephone = request.getParameter("phone");
+		String username = request.getParameter("username");
+		String email = request.getParameter("email");
+
+		if (!username.equals(user.getUsername())) {
+			usernameChanged = true;
+			User userExist = userService.findByUsername(username);
+			if (userExist != null) {
+				errors.add("error1");
+			}
+		}
+		if (!email.equals(user.getEmail())) {
+			User userExist = userService.findByEmail(email);
+			if (userExist != null) {
+				errors.add("error2");
+			}
+		}
+
+		if (!errors.isEmpty()) {
+			model.addAttribute("errors", errors);
+			return yourProfileGet(model);
+		}
+
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setPhone(telephone);
+		user.setEmail(email);
+		user.setUsername(username);
+		userService.save(user);
+
+		if (usernameChanged) {
+			if (auth != null){    
+				new SecurityContextLogoutHandler().logout(request, response, auth);
+			}
+			return "redirect:/login";
+		}
 		return yourProfileGet(model);
 	}
 

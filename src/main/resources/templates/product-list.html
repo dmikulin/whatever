@@ -13,22 +13,25 @@
 			<div id="test1" class="col s12">
 				<table class="bordered highlight responsive-table col s12 l12 topMargin" id="products" >
 			        <thead>
-			          <tr>
+			          <tr>			              
+			          	  <th data-field="active" >Active</th>
 			              <th data-field="no" >Product Number</th>
 			              <th data-field="name" >Name</th>
 			              <th data-field="price-eur" >Price EUR</th>
 			              <th data-field="price-usd" >Price USD</th>
-			              <th data-field="active" >Active</th>
 			          </tr>
 			        </thead>
 			
 			        <tbody>
 						<tr th:each="product : ${products}">
+							<td >
+		   						<a th:if="${product.active}" class="btn-floating btn-small green" ><i class="material-icons">verified_user</i></a>
+		   						<a th:unless="${product.active}" class="btn-floating btn-small red" ><i class="material-icons">error</i></a>
+		   					</td>
 		   					<td th:text="${product.productNumber}"></td>
 		   					<td th:text="${product.name}"></td>
 		   					<td th:text="${product.priceEUR}+'&euro;'"></td>
 		   					<td th:text="${product.priceUSD}+'$'"></td>
-		   					<td th:text="${product.active}"></td>
 						</tr>
 			        </tbody>
 		      	</table>
