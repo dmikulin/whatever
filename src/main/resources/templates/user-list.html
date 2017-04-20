@@ -46,7 +46,7 @@
 			   					<td th:text="${user.phone}"></td>
 			   					<td th:text="${user.getRolesString(user.roles)}"></td>
 			   					<td class="center" >
-			   						<a th:if="${user.hasAdminRole(user.roles)}" class="btn-floating btn-small green" ><i class="material-icons">verified_user</i></a>
+			   						<a th:if="${user.hasAdminRole(user.roles)}" class="btn-floating btn-small green notActive" ><i class="material-icons">verified_user</i></a>
 			   						<a th:unless="${user.hasAdminRole(user.roles)}" class="btn-floating btn-small red" th:href="'/admin/deactivate-user/'+${user.userId}" ><i class="material-icons">power_settings_new</i></a>
 			   					</td>
 							</tr>
