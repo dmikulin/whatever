@@ -9,7 +9,6 @@
 	<main>			
 	<div class="container ">
 		<div class="row">
-				<h4 class="center" >New product</h4>		   		    	     
 				<div class="input-field col l1"></div>		    							
 			    <form class="col s12 l10" id="register" action="/admin/new-product" method="post" enctype="multipart/form-data" style="padding: 50px; padding-top:0; margin-top: 20px;">
 					<div class="row">
@@ -17,9 +16,20 @@
 							<input id="product_no" name="product_no" type="text" data-length="10" class="validate" required="required" />
 							<label for="product_no" data-error="Wrong!" data-success="Right" >Product number</label>
 						</div>
-						<div class="input-field col s12 l9">
+						<div class="input-field col s12 l6">
+							<h4 class="center" >New product</h4>		   		    	     
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12 l6">
 							<input id="product_name" name="product_name" type="text" data-length="30" class="validate" required="required" />
 							<label for="product_name" data-error="Wrong!" data-success="Right" >Name of product</label>
+						</div>
+						<div class="selectDiv input-field col s12 l5">
+							<select id="productCategory" name="productCategory" required="required" size="1">
+								<option selected="selected" value="-1" >Select Product Category</option>
+								<option th:each="productCategory : ${categories}" th:value="${productCategory.categoryId}" th:text="${productCategory.name}"></option>
+							</select> 
 						</div>
 					</div>
 					<div class="row">
@@ -48,5 +58,11 @@
 	</main>
 	<div th:replace="template :: footer" id="main-wrapper" ></div>
 	<script th:src="@{/js/username-check.js}"></script>
+	<script >
+		$(document).ready(function() {
+		    $('select').material_select();
+		  });
+	</script>
+	
 </body>
 </html>
