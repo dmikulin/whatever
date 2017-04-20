@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -26,7 +27,10 @@ public class Product {
 	private Double priceEUR;
 	@Column(name="price_USD")
 	private Double priceUSD;
-
+	
+	@ManyToOne
+	private ProductCategory category;
+	
 	@Column(name="active")
 	private boolean active;
 
@@ -54,46 +58,37 @@ public class Product {
 		this.productNumber = productNumber;
 	}
 
-
 	public String getName() {
 		return name;
 	}
-
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-
 	public String getDescription() {
 		return description;
 	}
-
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-
 	public Double getPriceEUR() {
 		return priceEUR;
 	}
-
 
 	public void setPriceEUR(Double priceEUR) {
 		this.priceEUR = priceEUR;
 	}
 
-
 	public Double getPriceUSD() {
 		return priceUSD;
 	}
 
-
 	public void setPriceUSD(Double priceUSD) {
 		this.priceUSD = priceUSD;
 	}
-
 
 	public boolean isActive() {
 		return active;
@@ -103,6 +98,13 @@ public class Product {
 		this.active = active;
 	}
 
+	public ProductCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(ProductCategory category) {
+		this.category = category;
+	}
 
 
 }

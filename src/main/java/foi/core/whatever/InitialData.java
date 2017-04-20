@@ -34,18 +34,44 @@ public class InitialData implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {
-		loadInitialData();
+		if(roleService.findAll().size()==0){
+			loadInitialRoles();
+		}
+		if(userService.findAll().size()==0){
+			loadInitialUsers();
+		}		
+		if(productService.findAll().size()==0){
+			loadInitialProducts();
+		}
 	}
 
-	void loadInitialData() {
-		Role role = new Role();
-		role.setRoleName("Admin");
-		roleService.save(role);
+	private void loadInitialProducts() {
+		Product product = new Product();
+		product.setProductNumber("3321");
+		product.setName("Canon EOS 77D");
+		product.setDescription("Kada uzmete EOS 77D, značajke kao što je stražnji kontrolni kotačić i dodirni zaslon s promjenjivim kutom daju vam veću kontrolu i kreativnu slobodu. LCD zaslon na gornjoj strani omogućuje brzi pregled svih postavki fotoaparata.");
+		product.setPriceEUR(848.00);
+		product.setPriceUSD(899.99);
+		productService.save(product);
 
-		role = new Role();
-		role.setRoleName("User");
-		roleService.save(role);
+		product = new Product();
+		product.setProductNumber("9754");
+		product.setName("Samsung Galaxy S7 edge");
+		product.setDescription("Samsung Galaxy S7 Edge smartphone was launched in February 2016. The phone comes with a 5.50-inch touchscreen display with a resolution of 1440 pixels by 2560 pixels at a PPI of 534 pixels per inch.");
+		product.setPriceEUR(632.00);
+		product.setPriceUSD(669.99);
+		productService.save(product);
 		
+		product = new Product();
+		product.setProductNumber("6853");
+		product.setName("iPhone 7 gold 32GB");
+		product.setDescription("iPhone 7 dramatically improves the most important aspects of the iPhone experience. It introduces advanced new camera systems. The best performance and battery life ever in an iPhone.");
+		product.setPriceEUR(725.00);
+		product.setPriceUSD(769.00);
+		productService.save(product);
+	}
+
+	private void loadInitialUsers() {
 		ClassLoader classLoader = getClass().getClassLoader();
 
 		File file = new File(classLoader.getResource("static/img/admin-avatar.png").getFile());
@@ -94,29 +120,17 @@ public class InitialData implements ApplicationRunner {
 		user.setAvatar(byteFile1);
 		userService.save(user);
 		
-		Product product = new Product();
-		product.setProductNumber("3321");
-		product.setName("Canon EOS 77D");
-		product.setDescription("Kada uzmete EOS 77D, značajke kao što je stražnji kontrolni kotačić i dodirni zaslon s promjenjivim kutom daju vam veću kontrolu i kreativnu slobodu. LCD zaslon na gornjoj strani omogućuje brzi pregled svih postavki fotoaparata.");
-		product.setPriceEUR(848.00);
-		product.setPriceUSD(899.99);
-		productService.save(product);
-
-		product = new Product();
-		product.setProductNumber("9754");
-		product.setName("Samsung Galaxy S7 edge");
-		product.setDescription("Samsung Galaxy S7 Edge smartphone was launched in February 2016. The phone comes with a 5.50-inch touchscreen display with a resolution of 1440 pixels by 2560 pixels at a PPI of 534 pixels per inch.");
-		product.setPriceEUR(632.00);
-		product.setPriceUSD(669.99);
-		productService.save(product);
-		
-		product = new Product();
-		product.setProductNumber("6853");
-		product.setName("iPhone 7 gold 32GB");
-		product.setDescription("iPhone 7 dramatically improves the most important aspects of the iPhone experience. It introduces advanced new camera systems. The best performance and battery life ever in an iPhone.");
-		product.setPriceEUR(725.00);
-		product.setPriceUSD(769.00);
-		productService.save(product);
 	}
+
+	private void loadInitialRoles() {
+		Role role = new Role();
+		role.setRoleName("Admin");
+		roleService.save(role);
+
+		role = new Role();
+		role.setRoleName("User");
+		roleService.save(role);		
+	}
+
 
 }
