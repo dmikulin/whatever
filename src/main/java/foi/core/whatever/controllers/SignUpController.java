@@ -1,5 +1,11 @@
 package foi.core.whatever.controllers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import foi.core.whatever.model.Role;
 import foi.core.whatever.model.User;
@@ -27,6 +35,8 @@ public class SignUpController {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	private static String UPLOADED_FOLDER = "C://Windows//Temp//";
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signUpUser(Model model) {
@@ -39,15 +49,43 @@ public class SignUpController {
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public String SignUpUser(HttpServletRequest request, Model model) {
+	public String SignUpUser(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model) {
 
+		byte[] byteFile= null;
+		FileInputStream fis;
+
+		if (file.isEmpty()) {
+			ClassLoader classLoader = getClass().getClassLoader();
+			File oFile = new File(classLoader.getResource("static/img/default-avatar.png").getFile());
+			try {
+				byteFile = new byte[(int)oFile.length()];
+				fis = new FileInputStream(oFile);
+				fis.read(byteFile);
+				fis.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}else{
+			try {
+				byteFile = file.getBytes();
+				Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+				Files.write(path, byteFile);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		User user = new User();
 		user.setFirstName(request.getParameter("firstName"));
 		user.setLastName(request.getParameter("lastName"));
 		user.setUsername(request.getParameter("username"));
 		user.setPassword(bCryptPasswordEncoder.encode(request.getParameter("password")));
 		user.setEmail(request.getParameter("email"));
+		user.setPhone(request.getParameter("phone"));
 		user.addRoles(roleService.findByRoleName("User"));
+		user.setAvatar(byteFile);
+		user.setActive(false);
 		userService.save(user);
 		
 		return "redirect:login";
