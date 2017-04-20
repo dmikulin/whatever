@@ -12,7 +12,7 @@
 				<div class="input-field col l1"></div>		    							
 			    <form class="col s12 l10" id="register" action="/admin/new-product" method="post" enctype="multipart/form-data" style="padding: 50px; padding-top:0; margin-top: 20px;">
 					<div class="row">
-						<div class="input-field col s12 l3">
+						<div class="input-field col s12 l3" style="margin-top: 40px;">
 							<input id="product_no" name="product_no" type="text" data-length="10" class="validate" required="required" />
 							<label for="product_no" data-error="Wrong!" data-success="Right" >Product number</label>
 						</div>
@@ -25,12 +25,17 @@
 							<input id="product_name" name="product_name" type="text" data-length="30" class="validate" required="required" />
 							<label for="product_name" data-error="Wrong!" data-success="Right" >Name of product</label>
 						</div>
-						<div class="selectDiv input-field col s12 l5">
+						<div class="selectDiv input-field col s10 l5">
 							<select id="productCategory" name="productCategory" required="required" size="1">
 								<option selected="selected" value="-1" >Select Product Category</option>
 								<option th:each="productCategory : ${categories}" th:value="${productCategory.categoryId}" th:text="${productCategory.name}"></option>
 							</select> 
 						</div>
+						<div class="input-field col s2 l1">
+						<a class="btn-floating btn-medium waves-effect waves-light green" href="#categoryModal"> 
+							<i class="material-icons">add</i>
+						</a>
+					</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s12 l12">
@@ -55,6 +60,34 @@
 			    </form>
 		</div>
 	</div>
+	
+	<!-- Modal content-->
+	<div id="categoryModal" class="modal">
+		<div class="modal-content">
+			<div class="row center">
+				<h4>New Category</h4>
+			</div>
+			<div class="row">
+				<form>
+					<div class="row">
+						<div class="input-field col s12 l12">
+							<label for="name" >Category name</label> 
+							<input name="name" id="name" type="text" class="validate"/>
+						</div>
+						<div class="input-field col s12 l12">
+							<textarea name="description" id="description" required="required" class="materialize-textarea" data-length="120"></textarea>
+							<label for="description" >Category description</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12 l12 center">
+							<button class="btn waves-effect waves-light blue darken-2" type="button" name="action" id="actionAdd" >Save<i class="material-icons right">send</i></button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 	</main>
 	<div th:replace="template :: footer" id="main-wrapper" ></div>
 	<script th:src="@{/js/username-check.js}"></script>
@@ -62,6 +95,9 @@
 		$(document).ready(function() {
 		    $('select').material_select();
 		  });
+		$(document).ready(function() {
+			$('.modal').modal();
+		});
 	</script>
 	
 </body>

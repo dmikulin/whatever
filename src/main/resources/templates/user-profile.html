@@ -80,11 +80,8 @@
 				</div>
 
 				<div class="row">	
-			    	<div class="input-field col s12 l4">
-						<button class="btn waves-effect waves-light blue darken-2" type="submit" name="action" >Register<i class="material-icons right">send</i></button>
-					</div>	
-					<div class="input-field col s12 l6">
-						<button type="reset" class="waves-effect btn-flat waves-light grey lighten-3" >Clean form</button>						
+			    	<div class="input-field col s12 l12 center">
+						<button class="btn waves-effect waves-light blue darken-2" type="submit" name="action" >Save<i class="material-icons right">send</i></button>
 					</div>						
 				</div>		
 				<input type="hidden" th:name="${_csrf.parameterName}" id="csrf" th:value="${_csrf.token}"/>
