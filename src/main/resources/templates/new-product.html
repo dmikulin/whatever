@@ -27,12 +27,12 @@
 						</div>
 						<div class="selectDiv input-field col s10 l5">
 							<select id="productCategory" name="productCategory" required="required" size="1">
-								<option selected="selected" value="-1" >Select Product Category</option>
+								<option id="selectProductCategory" selected="selected" value="-1" >Select Product Category</option>
 								<option th:each="productCategory : ${categories}" th:value="${productCategory.categoryId}" th:text="${productCategory.name}"></option>
 							</select> 
 						</div>
 						<div class="input-field col s2 l1">
-						<a class="btn-floating btn-medium waves-effect waves-light green" href="#categoryModal"> 
+						<a class="btn-floating btn-medium waves-effect waves-light green" href="#categoryModal" id="addCategory"> 
 							<i class="material-icons">add</i>
 						</a>
 					</div>
@@ -53,7 +53,7 @@
 							<label for="price_USD" data-error="Insert correct number!" data-success="Right" >Price USD</label>
 						</div>	
 						<div class="input-field col s12 l4 center">
-							<button class="btn waves-effect waves-light blue darken-2 center" type="submit" name="action" >Save<i class="material-icons right">send</i></button>
+							<button class="btn waves-effect waves-light blue darken-2 center" type="submit" name="action" id="saveProduct" >Save<i class="material-icons right">send</i></button>
 						</div>
 					</div>
 					<input type="hidden" th:name="${_csrf.parameterName}" id="csrf" th:value="${_csrf.token}"/>
@@ -72,10 +72,10 @@
 					<div class="row">
 						<div class="input-field col s12 l12">
 							<label for="name" >Category name</label> 
-							<input name="name" id="name" type="text" class="validate"/>
+							<input name="name" id="category-name" type="text" class="validate"/>
 						</div>
 						<div class="input-field col s12 l12">
-							<textarea name="description" id="description" required="required" class="materialize-textarea" data-length="120"></textarea>
+							<textarea name="description" id="category-description" required="required" class="materialize-textarea" data-length="120"></textarea>
 							<label for="description" >Category description</label>
 						</div>
 					</div>
@@ -89,10 +89,10 @@
 		</div>
 	</div>
 	</main>
-	<script th:src="@{/js/speech-recognition.js}"></script>
-	<img onclick="startDictation()" src="//i.imgur.com/cHidSVu.gif" width="50"/>
-	<div th:replace="template :: footer" id="main-wrapper" ></div>
-	<script th:src="@{/js/username-check.js}"></script>		
+	<script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/speechkitt.min.js"></script>
+	
+	<div th:replace="template :: footer" id="main-wrapper" ></div>	
 	<script >
 		$(document).ready(function() {
 		    $('select').material_select();
@@ -102,5 +102,6 @@
 		});
 	</script>
 	
+	<script th:src="@{/js/speech-recognition.js}"></script>	
 </body>
 </html>
