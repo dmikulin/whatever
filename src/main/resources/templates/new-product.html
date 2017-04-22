@@ -89,8 +89,10 @@
 		</div>
 	</div>
 	</main>
+	<script th:src="@{/js/speech-recognition.js}"></script>
+	<img onclick="startDictation()" src="//i.imgur.com/cHidSVu.gif" width="50"/>
 	<div th:replace="template :: footer" id="main-wrapper" ></div>
-	<script th:src="@{/js/username-check.js}"></script>
+	<script th:src="@{/js/username-check.js}"></script>		
 	<script >
 		$(document).ready(function() {
 		    $('select').material_select();
