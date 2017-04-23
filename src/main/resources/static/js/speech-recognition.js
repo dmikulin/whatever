@@ -50,7 +50,7 @@ $(document)
 			  };
 		 annyang.addCommands(commands);
 		 SpeechKITT.annyang();
-		 SpeechKITT.setStylesheet('//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat.css');
+		 SpeechKITT.setStylesheet('//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat-midnight-blue.css');
 		 SpeechKITT.vroom();
 		 
 	}	
