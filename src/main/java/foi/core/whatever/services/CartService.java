@@ -13,6 +13,6 @@ public interface CartService {
 	
 	Cart findByCartId(int cartId);
 	
-	List<Cart> findByUser(User user);
+	Cart findByUser(User user);
 
 }

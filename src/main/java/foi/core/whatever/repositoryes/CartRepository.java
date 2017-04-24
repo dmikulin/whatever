@@ -1,7 +1,5 @@
 package foi.core.whatever.repositoryes;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import foi.core.whatever.model.Cart;
@@ -11,6 +9,6 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
 
 	Cart findByCartId(int cartId);
 	
-	List<Cart> findByUser(User user);
+	Cart findByUser(User user);
 
 }

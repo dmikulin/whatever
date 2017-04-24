@@ -3,17 +3,16 @@ package foi.core.whatever.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="cart")
 public class Cart {
 
 	@Id
@@ -25,8 +24,8 @@ public class Cart {
 	@ManyToOne
 	private User user;
 	
-	@ManyToMany
-	private List<Product> products = new ArrayList<Product>();
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartProducts> cartProducts;
 	
 	@Column(name="active")
 	private boolean active;
@@ -34,6 +33,7 @@ public class Cart {
 	public Cart() {
 		super();
 		setActive(true);
+		cartProducts = new ArrayList<CartProducts>();
 	}
 
 	public int getCartId() {
@@ -52,12 +52,12 @@ public class Cart {
 		this.user = user;
 	}
 
-	public List<Product> getProducts() {
-		return products;
+	public List<CartProducts> getCartProducts() {
+		return cartProducts;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setCartProducts(List<CartProducts> cartProducts) {
+		this.cartProducts = cartProducts;
 	}
 
 	public boolean isActive() {

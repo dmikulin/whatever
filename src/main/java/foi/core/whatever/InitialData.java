@@ -10,10 +10,12 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import foi.core.whatever.model.Cart;
 import foi.core.whatever.model.Product;
 import foi.core.whatever.model.ProductCategory;
 import foi.core.whatever.model.Role;
 import foi.core.whatever.model.User;
+import foi.core.whatever.services.CartService;
 import foi.core.whatever.services.ProductCategoryService;
 import foi.core.whatever.services.ProductService;
 import foi.core.whatever.services.RoleService;
@@ -29,7 +31,10 @@ public class InitialData implements ApplicationRunner {
 	private RoleService roleService;	
 	
 	@Autowired
-	private ProductService productService;
+	private ProductService productService;	
+	
+	@Autowired
+	private CartService cartService;
 	
 	@Autowired
 	private ProductCategoryService productCategoryService;
@@ -120,6 +125,10 @@ public class InitialData implements ApplicationRunner {
 		user.setAvatar(byteFile);
 		userService.save(user);		
 		
+		Cart cart = new Cart();
+		cart.setUser(user);
+		cartService.save(cart);
+		
 		file = new File(classLoader.getResource("static/img/default-avatar.png").getFile());
 		byte[] byteFile1 = new byte[(int)file.length()];
 
@@ -142,6 +151,9 @@ public class InitialData implements ApplicationRunner {
 		user.setAvatar(byteFile1);
 		userService.save(user);
 		
+		cart = new Cart();
+		cart.setUser(user);
+		cartService.save(cart);
 	}
 
 	private void loadInitialRoles() {

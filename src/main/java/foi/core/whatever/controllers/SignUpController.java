@@ -19,14 +19,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import foi.core.whatever.model.Cart;
 import foi.core.whatever.model.Role;
 import foi.core.whatever.model.User;
+import foi.core.whatever.services.CartService;
 import foi.core.whatever.services.RoleService;
 import foi.core.whatever.services.UserService;
 
 @Controller
 public class SignUpController {
 
+	@Autowired
+	private CartService cartService;
+	
 	@Autowired
 	UserService userService;
 
@@ -88,6 +93,10 @@ public class SignUpController {
 		user.setActive(false);
 		userService.save(user);
 		
+		Cart cart = new Cart();
+		cart.setUser(user);
+		cartService.save(cart);
+	
 		return "redirect:login";
 	}
 
