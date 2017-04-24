@@ -7,12 +7,25 @@
 	<main>			
 		<div class="container">
 			<div class="row">
-			    	<h4 class="center" >Smart shopping</h4>		   		    	     
-	
+			    <h4 class="center" >Your Cart</h4>		   		    	     
+				<div id="myDiv"></div>
 			</div>
 		</div>
 	</main>
 	<div th:replace="template :: footer"></div>
-	<script th:src="@{/js/speech-recognition.js}"></script>
+	<script>
+	
+		$(document).ready(function(){
+		   new getCart(); 
+		 });
+	
+		function getCart(){
+			$.get( "http://localhost:8080/cart", function( data ) {
+				$( "#myDiv" ).html( data );
+			}).done(function(){
+		        setTimeout(function(){getCart();}, 5000);
+		    });
+		}
+	</script>
 </body>
 </html>

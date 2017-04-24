@@ -14,32 +14,32 @@
  	
  	<div th:fragment="nav" id="nav" >
 		
-		<ul class="side-nav" id="mobile-demo" style="z-index: 999;">
+		<ul class="side-nav" id="mobile-demo" style="z-index: 999; background-color: #2c3e50; color: white;" >
 			<li sec:authorize="isAuthenticated()" class="divider"></li>
-			<li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/user-list" id="users">Users</a></li>
+			<li sec:authorize="hasAuthority('ADMIN')" ><a class="cyan-text text-lighten-5" href="/admin/user-list" id="users">Users</a></li>
 			<li sec:authorize="hasAuthority('ADMIN')" class="divider"></li>
-			<li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/new-product" id="new-product">New Product</a></li>
+			<li sec:authorize="hasAuthority('ADMIN')"><a class="cyan-text text-lighten-5" href="/admin/new-product" id="new-product">New Product</a></li>
 			<li sec:authorize="hasAuthority('ADMIN')" class="divider"></li>
-			<li sec:authorize="isAuthenticated()"><a href="/product-list" id="products">Products</a></li>
+			<li sec:authorize="isAuthenticated()"><a class="cyan-text text-lighten-5" href="/product-list" id="products">Products</a></li>
 			<li sec:authorize="isAuthenticated()" class="divider"></li>
-			<li sec:authorize="isAuthenticated()"><a href="/smart-shopping" id="smart-shopping">Smart Shopping</a></li>
+			<li sec:authorize="isAuthenticated()"><a class="cyan-text text-lighten-5" href="/smart-shopping" id="smart-shopping">Smart Shopping</a></li>
 			<li sec:authorize="isAuthenticated()" class="divider"></li>
-			<li sec:authorize="isAuthenticated()"><a href="/shopping" id="shopping">Shopping</a></li>
+			<li sec:authorize="isAuthenticated()"><a class="cyan-text text-lighten-5" href="/shopping" id="shopping">Shopping</a></li>
 			<li sec:authorize="isAuthenticated()" class="divider"></li>
-			<li sec:authorize="isAnonymous()"><a href="/login" >Log In</a></li>
+			<li sec:authorize="isAnonymous()"><a class="cyan-text text-lighten-5" href="/login" >Log In</a></li>
 			<li sec:authorize="isAnonymous()" class="divider"></li>
-			<li sec:authorize="isAnonymous()"><a href="/signup" >Sign Up</a></li>
+			<li sec:authorize="isAnonymous()"><a class="cyan-text text-lighten-5" href="/signup" >Sign Up</a></li>
 			<li sec:authorize="isAnonymous()" class="divider"></li>
-			<li sec:authorize="isAuthenticated()"><a href="/user-profile" id="profile">Your profile</a></li>
+			<li sec:authorize="isAuthenticated()"><a class="cyan-text text-lighten-5" href="/user-profile" id="profile">Your profile</a></li>
 			<li sec:authorize="isAuthenticated()" class="divider"></li>
-			<li sec:authorize="isAuthenticated()"><a href="javascript: document.logoutForm.submit()" id="log-out">Log Out</a></li>
+			<li sec:authorize="isAuthenticated()" ><a class="cyan-text text-lighten-5" href="javascript: document.logoutForm.submit()" id="log-out">Log Out</a></li>
 			<li sec:authorize="isAuthenticated()" class="divider"></li>		  					    		
-			<li style="display:inline;"><a style="display:inline;" >EN</a><a style="display:inline;" >RU</a></li>		  					    		
+			<li style="display:inline;" ><a class="cyan-text text-lighten-5" style="display:inline;" >EN</a><a class="cyan-text text-lighten-5"  style="display:inline;" >RU</a></li>		  					    		
 			<li sec:authorize="isAuthenticated()" class="divider"></li>		  					    		
 		</ul>		
 				 			
 			<div class="navbar-fixed">
-		   		<nav class="nav-extended " style="background-color: #34495e" >
+		   		<nav class="nav-extended " style="background-color: #2c3e50" >
 					<div class="nav-wrapper ">
       					<a style="margin-left: 20px;" href="/index" class="brand-logo">Whatever</a>
 						<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -74,7 +74,7 @@
 
 	<div th:fragment="footer" >
 		<footer class="page-footer orange" style="padding-top: 0px;">
-          <div class="footer-copyright" style="background-color: #34495e">
+          <div class="footer-copyright" style="background-color: #2c3e50">
             <div class="container center">
 				&copy; 2017 Dejan Mikulinjak &#38; Nino Žvorc
             </div>
