@@ -28,11 +28,11 @@ $(document)
 			    	document.getElementById("description").focus();
 					document.getElementById("description").value = val;
 			    },
-			    'price EUR *val': function(val) { 
+			    'price euro *val': function(val) { 
 			    	document.getElementById("price_EUR").focus();
 					document.getElementById("price_EUR").value = val;
 			    },
-			    'price USD *val': function(val) { 
+			    'price dolar *val': function(val) { 
 			    	document.getElementById("price_USD").focus();
 					document.getElementById("price_USD").value = val;
 			    },
