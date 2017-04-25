@@ -68,5 +68,13 @@ public class Cart {
 		this.active = active;
 	}
 
+	public double getTotal() {
+		double total=0;
+		for(CartProducts product : this.cartProducts){
+			total+=product.getQuantity()*product.getProduct().getPriceEUR();
+		}
+		return total;
+	}
+
 
 }

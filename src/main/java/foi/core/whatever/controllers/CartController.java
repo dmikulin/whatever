@@ -38,6 +38,7 @@ public class CartController {
 
 		List<CartProducts> cartProducts = cart.getCartProducts();
 		model.addAttribute("cartProducts", cartProducts);
+		model.addAttribute("total", cart.getTotal());
 
 		return "cart";	
 	}

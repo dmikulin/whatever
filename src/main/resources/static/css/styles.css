@@ -48,3 +48,10 @@ main {
 .topMargin {
 	margin-top: 20px;
 }
+
+.textTotal {
+	padding: 5px; 
+	border-top: 1px solid gray; 
+	text-align: right;
+	color: blue;
+}

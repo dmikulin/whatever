@@ -32,6 +32,9 @@ public class Product {
     
     @OneToMany(mappedBy = "product")
     private List<CartProducts> cartProducts;
+    
+    @OneToMany(mappedBy = "product")
+    private List<ReceiptProducts> receiptProducts;
 	
 	@ManyToOne
 	private ProductCategory category;
@@ -43,6 +46,7 @@ public class Product {
 		super();
 		setActive(true);
 		cartProducts = new ArrayList<CartProducts>();
+		receiptProducts = new ArrayList<ReceiptProducts>();
 	}
 
 	public int getProductId() {
@@ -118,6 +122,14 @@ public class Product {
 
 	public void setCartProducts(List<CartProducts> cartProducts) {
 		this.cartProducts = cartProducts;
+	}
+
+	public List<ReceiptProducts> getReceiptProducts() {
+		return receiptProducts;
+	}
+
+	public void setReceiptProducts(List<ReceiptProducts> receiptProducts) {
+		this.receiptProducts = receiptProducts;
 	}
 
 
