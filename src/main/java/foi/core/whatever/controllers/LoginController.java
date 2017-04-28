@@ -1,5 +1,7 @@
 package foi.core.whatever.controllers;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,10 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth == null) {
+			System.out.println("NE DELA!!");
+		}
         return "login";
     }
 		

@@ -12,6 +12,8 @@ public interface ProductService {
 
 	Product findByName(String name);
 	
+	Product findByProductNumber(String productNumber);
+
 	List<Product> findByActive(Boolean active);
 	
 	List<Product> findAll();

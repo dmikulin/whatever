@@ -1,12 +1,13 @@
 package foi.core.whatever.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -29,24 +30,24 @@ public class Product {
 	private Double priceEUR;
 	@Column(name="price_USD")
 	private Double priceUSD;
-    
-    @OneToMany(mappedBy = "product")
-    private List<CartProducts> cartProducts;
-    
-    @OneToMany(mappedBy = "product")
-    private List<ReceiptProducts> receiptProducts;
-	
+
+	@ManyToMany(mappedBy="products")
+	private Set<Cart> carts;
+
+	@OneToMany(mappedBy = "product")
+	private Set<ReceiptProducts> receiptProducts;
+
 	@ManyToOne
 	private ProductCategory category;
-	
+
 	@Column(name="active")
 	private boolean active;
 
 	public Product() {
 		super();
 		setActive(true);
-		cartProducts = new ArrayList<CartProducts>();
-		receiptProducts = new ArrayList<ReceiptProducts>();
+		carts = new HashSet<>();
+		receiptProducts = new HashSet<>();
 	}
 
 	public int getProductId() {
@@ -115,20 +116,20 @@ public class Product {
 	public void setCategory(ProductCategory category) {
 		this.category = category;
 	}
-	
-	public List<CartProducts> getCartProducts() {
-		return cartProducts;
+
+	public Set<Cart> getCarts() {
+		return carts;
 	}
 
-	public void setCartProducts(List<CartProducts> cartProducts) {
-		this.cartProducts = cartProducts;
+	public void setCarts(Set<Cart> carts) {
+		this.carts = carts;
 	}
 
-	public List<ReceiptProducts> getReceiptProducts() {
+	public Set<ReceiptProducts> getReceiptProducts() {
 		return receiptProducts;
 	}
 
-	public void setReceiptProducts(List<ReceiptProducts> receiptProducts) {
+	public void setReceiptProducts(Set<ReceiptProducts> receiptProducts) {
 		this.receiptProducts = receiptProducts;
 	}
 

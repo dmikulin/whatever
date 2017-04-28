@@ -1,15 +1,17 @@
 package foi.core.whatever.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -20,20 +22,20 @@ public class Cart {
 	@NotNull
 	@Column(name="cart_id")
 	private int cartId;
-	
+
 	@ManyToOne
 	private User user;
-	
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartProducts> cartProducts;
-	
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<Product> products;
+
 	@Column(name="active")
 	private boolean active;
 
 	public Cart() {
 		super();
 		setActive(true);
-		cartProducts = new ArrayList<CartProducts>();
+		products = new HashSet<>();
 	}
 
 	public int getCartId() {
@@ -52,13 +54,6 @@ public class Cart {
 		this.user = user;
 	}
 
-	public List<CartProducts> getCartProducts() {
-		return cartProducts;
-	}
-
-	public void setCartProducts(List<CartProducts> cartProducts) {
-		this.cartProducts = cartProducts;
-	}
 
 	public boolean isActive() {
 		return active;
@@ -70,11 +65,24 @@ public class Cart {
 
 	public double getTotal() {
 		double total=0;
-		for(CartProducts product : this.cartProducts){
-			total+=product.getQuantity()*product.getProduct().getPriceEUR();
+		List<Product> prods = new ArrayList<>();
+		prods.addAll(this.products);
+		for(Product product : prods){
+			total+=product.getPriceEUR();
 		}
 		return total;
 	}
 
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<Product> products) {
+		this.products = products;
+	}
+
+	public void addProduct(Product product) {
+		this.products.add(product);
+	}
 
 }

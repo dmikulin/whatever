@@ -1,52 +1,82 @@
 package foi.core.whatever;
 
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import foi.core.whatever.model.Cart;
+import foi.core.whatever.model.Product;
+import foi.core.whatever.model.User;
+import foi.core.whatever.services.CartService;
+import foi.core.whatever.services.ProductService;
+import foi.core.whatever.services.UserService;
+
 @Component
 public class ServerSocketClass implements ApplicationRunner {
 
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private ProductService productService;
+
+	@Autowired
+	private CartService cartService;
+
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {
-		
+
 		String fromclient;
+		ServerSocket server = new ServerSocket(5000);
 
-		ServerSocket server = new ServerSocket (5000);
+		System.out.println("TCP Server waiting for client on port 5000!");
 
-		System.out.println ("TCPServer Waiting for client on port 5000");
+		while (true) {
+			Socket connected = server.accept();
+			System.out.println(
+					" The Client: " + connected.getInetAddress() + ":" + connected.getPort() + " is connected!");
 
-		while(true) 
-		{
-		    Socket connected = server.accept();
-		    System.out.println( " THE CLIENT"+" "+ connected.getInetAddress() +":"+connected.getPort()+" IS CONNECTED ");
+			BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connected.getInputStream()));
 
-		    BufferedReader inFromClient = new BufferedReader(new InputStreamReader (connected.getInputStream()));
+			while (true) {
+				fromclient = inFromClient.readLine();
 
-		    while ( true )
-		    {
-		        fromclient = inFromClient.readLine();
-
-		        if ( fromclient.equals("q") || fromclient.equals("Q") )
-		        {
-		            connected.close();
-		            break;
-		        }
-		        else
-		        {
-		            System.out.println( "RECIEVED:" + fromclient );
-		        } 
-		    }
+				if (fromclient.equals("q") || fromclient.equals("Q")) {
+					connected.close();
+					break;
+				} else {
+					System.out.println("RFID: " + fromclient);
+					handleRequest(fromclient);
+				}
+			}
 		}
-
 	}
 
-	
+	private void handleRequest(String productNumber) {
+		//		AuthenticationFacade authFacade = new AuthenticationFacade();
+		//		Authentication auth = authFacade.getAuthentication();
+		//		if (auth == null) {
+		//			System.out.println("NE DELA!!");
+		//			return;
+		//		}
+		//		String username = auth.getName();
+		//		System.out.println(username);
+		User user = userService.findByUsername("admin");
+		Cart cart = cartService.findByUser(user);
+		Product product = productService.findByProductNumber(productNumber);
+		if (product == null || cart==null) {
+			return;
+		}
+		System.out.println(product.getProductId());
+		System.out.println(cart.getUser().getUsername());
+		cart.addProduct(product);
+		cartService.save(cart);
+	}
 
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -55,7 +56,7 @@ public class InitialData implements ApplicationRunner {
 		}		
 		if(productService.findAll().size()==0){
 			loadInitialProducts();
-		}		
+		}	
 
 	}
 

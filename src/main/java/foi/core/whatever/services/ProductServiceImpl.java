@@ -39,4 +39,9 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findAll();
 	}
 
+	@Override
+	public Product findByProductNumber(String productNumber) {
+		return productRepository.findByProductNumber(productNumber);
+	}
+
 }
