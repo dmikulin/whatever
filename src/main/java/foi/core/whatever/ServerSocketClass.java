@@ -73,8 +73,6 @@ public class ServerSocketClass implements ApplicationRunner {
 		if (product == null || cart==null) {
 			return;
 		}
-		System.out.println(product.getProductId());
-		System.out.println(cart.getUser().getUsername());
 		cart.addProduct(product);
 		cartService.save(cart);
 	}

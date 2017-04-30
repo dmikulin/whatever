@@ -1,6 +1,7 @@
 package foi.core.whatever.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class Receipt {
 	private User user;
 	
 	@Column(name="document_date")
-	private LocalDate documentDate;
+	private LocalDateTime documentDate;
 	
     @OneToMany(mappedBy = "receipt", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReceiptProducts> receiptProducts;
@@ -44,21 +45,17 @@ public class Receipt {
 		return receiptId;
 	}
 
-
 	public void setReceiptId(int receiptId) {
 		this.receiptId = receiptId;
 	}
 
-
-	public LocalDate getDocumentDate() {
+	public LocalDateTime getDocumentDate() {
 		return documentDate;
 	}
 
-
-	public void setDocumentDate(LocalDate documentDate) {
+	public void setDocumentDate(LocalDateTime documentDate) {
 		this.documentDate = documentDate;
 	}
-
 
 	public User getUser() {
 		return user;
@@ -83,6 +80,10 @@ public class Receipt {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
+	
+	public String getTimeString(LocalDateTime dateTime) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+		return dateTime.format(formatter);
+	}
 
 }
