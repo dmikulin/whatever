@@ -62,40 +62,57 @@ public class InitialData implements ApplicationRunner {
 
 	private void loadInitialCategories() {
 		ProductCategory category = new ProductCategory();
-		category.setName("Camera");
+		category.setName("Zacin");
 		productCategoryService.save(category);
 		
 		category = new ProductCategory();
-		category.setName("Smart-Phone");
+		category.setName("Cokolada");
+		productCategoryService.save(category);
+		
+		category = new ProductCategory();
+		category.setName("Vitaminski napitak");
+		productCategoryService.save(category);
+		
+		category = new ProductCategory();
+		category.setName("Keksi");
 		productCategoryService.save(category);
 	}
 
 	private void loadInitialProducts() {
 		Product product = new Product();
-		product.setProductNumber("3321");
-		product.setName("Canon EOS 77D");
-		product.setCategory(productCategoryService.findByName("Camera"));
-		product.setDescription("Kada uzmete EOS 77D, značajke kao što je stražnji kontrolni kotačić i dodirni zaslon s promjenjivim kutom daju vam veću kontrolu i kreativnu slobodu. LCD zaslon na gornjoj strani omogućuje brzi pregled svih postavki fotoaparata.");
-		product.setPriceEUR(848.00);
-		product.setPriceUSD(899.99);
+		product.setProductNumber("5d105039");
+		product.setName("Vegeta - Podravka 1kg");
+		product.setCategory(productCategoryService.findByName("Zacin"));
+		product.setDescription("Bogatstvo okusa. 100% kvalitetan odabir bez dodatnih aroma, bez konzervansa. Za inspiraciju i slobodu da pripremiše sve što zamisliš. Odvaži se i započni nove kulinarske priče.");
+		product.setPriceEUR(3.35);
+		product.setPriceUSD(3.65);
 		productService.save(product);
 
 		product = new Product();
-		product.setProductNumber("9754");
-		product.setName("Samsung Galaxy S7 edge");
-		product.setCategory(productCategoryService.findByName("Smart-Phone"));
-		product.setDescription("Samsung Galaxy S7 Edge smartphone was launched in February 2016. The phone comes with a 5.50-inch touchscreen display with a resolution of 1440 pixels by 2560 pixels at a PPI of 534 pixels per inch.");
-		product.setPriceEUR(632.00);
-		product.setPriceUSD(669.99);
+		product.setProductNumber("223d4a39");
+		product.setName("Mliječna čokolada - Dorina 250g");
+		product.setCategory(productCategoryService.findByName("Cokolada"));
+		product.setDescription("Kraševa vrhunska mliječna čokolada kreirana je za prave poznavatelje slastica. Aromatičnog, bogatog okusa, izrađena od najboljih i najkvalitetnijih sastojaka sinonim je za kvalitetu kojoj generacije potrošača neupitno vjeruje.");
+		product.setPriceEUR(2.95);
+		product.setPriceUSD(3.20);
 		productService.save(product);
 		
 		product = new Product();
-		product.setProductNumber("6853");
-		product.setName("iPhone 7 gold 32GB");
-		product.setCategory(productCategoryService.findByName("Smart-Phone"));
-		product.setDescription("iPhone 7 dramatically improves the most important aspects of the iPhone experience. It introduces advanced new camera systems. The best performance and battery life ever in an iPhone.");
-		product.setPriceEUR(725.00);
-		product.setPriceUSD(769.00);
+		product.setProductNumber("40e4667c");
+		product.setName("Cedevita okus limun 1kg");
+		product.setCategory(productCategoryService.findByName("Vitaminski napitak"));
+		product.setDescription("Prirodna aroma - 9 vitamina. Od 1969. Cedevita je vaš omiljeni napitak jedinstvenog okusa i izvor vitamina: C, B2, B6, B12, niacina, pantotenske kiseline i folne kiseline koji doprinose smanjenju umora i iscrpljenosti.");
+		product.setPriceEUR(5.35);
+		product.setPriceUSD(5.83);
+		productService.save(product);
+		
+		product = new Product();
+		product.setProductNumber("f0b55c7c");
+		product.setName("Napolitanke s čokoladnim punjenjem - Kraš 840g");
+		product.setCategory(productCategoryService.findByName("Keksi"));
+		product.setDescription("Vrhunska kombinacija prhkih vafl listova i slasne kreme od čokolade rezultat je Kraševog dugogodišnjeg iskustva i tradicije u proizvodnji vafl proizvoda.");
+		product.setPriceEUR(3.36);
+		product.setPriceUSD(3.67);
 		productService.save(product);
 	}
 

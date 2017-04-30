@@ -19,7 +19,7 @@ import foi.core.whatever.services.UserService;
 
 @Component
 public class ServerSocketClass implements ApplicationRunner {
-
+	
 	@Autowired
 	private UserService userService;
 
@@ -28,7 +28,8 @@ public class ServerSocketClass implements ApplicationRunner {
 
 	@Autowired
 	private CartService cartService;
-
+	
+	
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {
 
@@ -59,14 +60,6 @@ public class ServerSocketClass implements ApplicationRunner {
 	}
 
 	private void handleRequest(String productNumber) {
-		//		AuthenticationFacade authFacade = new AuthenticationFacade();
-		//		Authentication auth = authFacade.getAuthentication();
-		//		if (auth == null) {
-		//			System.out.println("NE DELA!!");
-		//			return;
-		//		}
-		//		String username = auth.getName();
-		//		System.out.println(username);
 		User user = userService.findByUsername("admin");
 		Cart cart = cartService.findByUser(user);
 		Product product = productService.findByProductNumber(productNumber);
