@@ -62,22 +62,31 @@ public class InitialData implements ApplicationRunner {
 		}
 	}
 
-	private void loadInitialCategories() {
+	private void loadInitialCategories() throws ClientProtocolException, IOException {
 		ProductCategory category = new ProductCategory();
 		category.setName("Zacin");
 		productCategoryService.save(category);
+
+		yaasServices.newCategory(category);
 
 		category = new ProductCategory();
 		category.setName("Cokolada");
 		productCategoryService.save(category);
 
+		yaasServices.newCategory(category);
+
 		category = new ProductCategory();
 		category.setName("Vitaminski napitak");
 		productCategoryService.save(category);
 
+		yaasServices.newCategory(category);
+
 		category = new ProductCategory();
 		category.setName("Keksi");
 		productCategoryService.save(category);
+
+		yaasServices.newCategory(category);
+
 	}
 
 	private void loadInitialProducts() throws ClientProtocolException, IOException {
@@ -152,13 +161,14 @@ public class InitialData implements ApplicationRunner {
 		user.addRoles(roleService.findByRoleName("Admin"));
 		user.addRoles(roleService.findByRoleName("User"));
 		user.setAvatar(byteFile);
+		user.setYaasId(yaasServices.newCustomer(user));		
 		userService.save(user);	
-
-		yaasServices.newCustomer(user);
 
 		Cart cart = new Cart();
 		cart.setUser(user);
 		cartService.save(cart);
+
+		yaasServices.newCart(cart);
 
 		file = new File(classLoader.getResource("static/img/default-avatar.png").getFile());
 		byte[] byteFile1 = new byte[(int)file.length()];
@@ -180,13 +190,15 @@ public class InitialData implements ApplicationRunner {
 		user.setPhone("098 594 5197");
 		user.addRoles(roleService.findByRoleName("User"));
 		user.setAvatar(byteFile1);
+		user.setYaasId(yaasServices.newCustomer(user));
 		userService.save(user);
-
-		yaasServices.newCustomer(user);
 
 		cart = new Cart();
 		cart.setUser(user);
 		cartService.save(cart);
+
+		yaasServices.newCart(cart);
+
 	}
 
 	private void loadInitialRoles() {

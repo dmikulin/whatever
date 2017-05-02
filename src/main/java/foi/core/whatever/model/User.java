@@ -24,6 +24,8 @@ public class User {
 	@NotNull
 	@Column(name = "user_id")
 	private int userId;
+	@Column(name = "yaas_id")
+	private String yaasId;
 	@Column(name = "first_name")
 	private String firstName;
 	@Column(name = "last_name")
@@ -58,6 +60,14 @@ public class User {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public String getYaasId() {
+		return yaasId;
+	}
+
+	public void setYaasId(String yaasId) {
+		this.yaasId = yaasId;
 	}
 
 	public String getFirstName() {
