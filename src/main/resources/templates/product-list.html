@@ -16,11 +16,10 @@
 			        <thead>
 			          <tr>			              
 			          	  <th data-field="active" >Active</th>
-			              <th data-field="no" >Product Number</th>
+			              <th data-field="no" >Code</th>
 			              <th data-field="name" >Name</th>
-			              <th data-field="name" >Category</th>
-			              <th data-field="price-eur" >Price EUR</th>
-			              <th data-field="price-usd" >Price USD</th>
+			              <th data-field="name" >Description</th>
+			              <th data-field="price-eur" >Price</th>
 			          </tr>
 			        </thead>
 			
@@ -32,9 +31,8 @@
 		   					</td>
 		   					<td th:text="${product.productNumber}"></td>
 		   					<td th:text="${product.name}"></td>
-		   					<td th:text="${product.category.name}"></td>
-		   					<td th:text="${product.priceEUR}+' &euro;'"></td>
-		   					<td th:text="${product.priceUSD}+' $'"></td>
+		   					<td th:text="${product.description}"></td>
+		   					<td th:text="${product.priceEUR}+'&euro;'"></td>
 						</tr>
 			        </tbody>
 		      	</table>

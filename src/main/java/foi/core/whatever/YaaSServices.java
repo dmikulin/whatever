@@ -1,6 +1,7 @@
 package foi.core.whatever;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -12,6 +13,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
@@ -24,7 +26,7 @@ import foi.core.whatever.model.User;
 @Component
 public class YaaSServices {
 
-	private static String TOKEN = "Bearer 022-d46f2b65-befc-4aec-9d94-feea8c87c330";
+	private static String TOKEN = "Bearer 022-1545e603-cbde-40c5-882c-1452ff519a27";
 
 	private static String PRODUCT_SERVICE = "https://api.yaas.io/hybris/product/v2/noviprojekt/products";
 	private static String PRODUCT_DETAILS_SERVICE = "https://api.beta.yaas.io/hybris/productdetails/v2/noviprojekt/productdetails";
@@ -54,12 +56,12 @@ public class YaaSServices {
 		post.setEntity(entity);
 		HttpResponse response = client.execute(post);
 
-		System.out.println("Response status: "+  response.getStatusLine().getStatusCode());
+		System.out.println("[NEW PRODUCT] Response Status: "+  response.getStatusLine().getStatusCode());
 
 		newPrice(product);
 	}
 
-	public List<Product> getAllProducts() throws ClientProtocolException, IOException{
+	public List<Product> getAllProducts() throws ClientProtocolException, IOException, JSONException{
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet get = new HttpGet(PRODUCT_DETAILS_SERVICE);
 
@@ -67,10 +69,23 @@ public class YaaSServices {
 		HttpResponse response = client.execute(get);
 
 		String jsonString = EntityUtils.toString(response.getEntity());
-
 		System.out.println("All products: "+  jsonString);
-
-		return null;
+		
+		List<Product> products = new ArrayList<>();
+		JSONArray jsonProducts = new JSONArray(jsonString);
+		for (int i = 0; i < jsonProducts.length(); i++) {
+			Product product = new Product();
+		    JSONObject jsonProduct = jsonProducts.getJSONObject(i).getJSONObject("product");
+		    product.setProductNumber(jsonProduct.getString("code"));
+		    product.setName(jsonProduct.getJSONObject("name").getString("en"));
+		    product.setDescription(jsonProduct.getJSONObject("description").getString("en"));
+		    JSONArray jsonPrices = jsonProducts.getJSONObject(i).getJSONArray("prices");
+			for (int j = 0; j < jsonPrices.length(); j++) {
+				product.setPriceEUR(jsonPrices.getJSONObject(j).getDouble("originalAmount"));
+			}
+			products.add(product);
+		}
+		return products;
 	}
 
 	public void newPrice(Product product) throws ClientProtocolException, IOException{	
@@ -88,7 +103,7 @@ public class YaaSServices {
 		post.setEntity(entity);
 		HttpResponse response = client.execute(post);
 
-		System.out.println("Response status: "+  response.getStatusLine().getStatusCode());
+		System.out.println("[NEW PRICE] Response Status: "+  response.getStatusLine().getStatusCode());
 	}
 
 	public void newCategory(ProductCategory category) throws ClientProtocolException, IOException{	
@@ -106,7 +121,7 @@ public class YaaSServices {
 		post.setEntity(entity);
 		HttpResponse response = client.execute(post);
 
-		System.out.println("Response status: "+  response.getStatusLine().getStatusCode());
+		System.out.println("[NEW CATEGORY] Response Status: "+  response.getStatusLine().getStatusCode());
 	}
 
 	public String newCustomer(User user) throws ClientProtocolException, IOException{	
@@ -126,7 +141,7 @@ public class YaaSServices {
 		post.setEntity(entity);
 		HttpResponse response = client.execute(post);
 
-		System.out.println("Response status: "+  response.getStatusLine().getStatusCode());
+		System.out.println("[NEW CUSTOMER] Response Status: "+  response.getStatusLine().getStatusCode());
 		String jsonString = EntityUtils.toString(response.getEntity());
 
 		String customerId="";
@@ -170,7 +185,7 @@ public class YaaSServices {
 		post.setEntity(entity);
 		HttpResponse response = client.execute(post);
 
-		System.out.println("Response status: "+  response.getStatusLine().getStatusCode());
+		System.out.println("[NEW CART] Response Status: "+  response.getStatusLine().getStatusCode());
 
 		String jsonString = EntityUtils.toString(response.getEntity());
 
