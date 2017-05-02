@@ -28,60 +28,54 @@
 				        <thead>
 				          <tr>
 				              <th data-field="pp" ></th>
+				              <th data-field="name" >ID</th>
 				              <th data-field="name" >Name</th>
-				              <th data-field="username" >Username</th>
 				              <th data-field="email" >E-mail</th>
 				              <th data-field="phone" >Phone</th>
-				              <th data-field="roles" >Roles</th>
 				              <th class="center" data-field="roles" >Deactivate</th>
 				          </tr>
 				        </thead>
 				
 				        <tbody>
-							<tr th:each="user : ${activeUsers}">
+							<tr th:each="user : ${allUsers}" th:if="${user.active}" >
 			   					<td><img th:attr="src=@{${user.encodeBase64(user.avatar)}}" height="50px;" class="circle" /></td>
+			   					<td th:text="${user.yaasId}"></td>
 			   					<td th:text="${user.firstName}+' '+${user.lastName}"></td>
-			   					<td th:text="${user.username}"></td>
 			   					<td th:text="${user.email}"></td>
 			   					<td th:text="${user.phone}"></td>
-			   					<td th:text="${user.getRolesString(user.roles)}"></td>
 			   					<td class="center" >
-			   						<a th:if="${user.hasAdminRole(user.roles)}" class="btn-floating btn-small green notActive" ><i class="material-icons">verified_user</i></a>
-			   						<a th:unless="${user.hasAdminRole(user.roles)}" class="btn-floating btn-small red" th:href="'/admin/deactivate-user/'+${user.userId}" ><i class="material-icons">power_settings_new</i></a>
+			   						<a class="btn-floating btn-small red" th:href="'/admin/deactivate-user/'+${user.userId}" ><i class="material-icons">power_settings_new</i></a>
 			   					</td>
 							</tr>
 				        </tbody>
 			      	</table>
 			    </div>		    
 				<div id="test2" class="col s12">
-					<table th:if="${not #lists.isEmpty(deactiveUsers)}" class="bordered highlight responsive-table col s12 l12 topMargin" id="users" >
+					<table class="bordered highlight responsive-table col s12 l12 topMargin" id="users" >
 				        <thead>
 				          <tr>
 				              <th data-field="pp" ></th>
+				              <th data-field="name" >ID</th>
 				              <th data-field="name" >Name</th>
-				              <th data-field="username" >Username</th>
 				              <th data-field="email" >E-mail</th>
 				              <th data-field="phone" >Phone</th>
-				              <th data-field="roles" >Roles</th>
 				              <th class="center" data-field="roles" >Activate</th>
 				          </tr>
 				        </thead>
 				
 				        <tbody>
-							<tr th:each="user : ${deactiveUsers}">
+							<tr th:each="user : ${allUsers}"  th:unless="${user.active}"  >
 			   					<td><img th:attr="src=@{${user.encodeBase64(user.avatar)}}" height="50px;" class="circle" /></td>
+								<td th:text="${user.yaasId}"></td>
 			   					<td th:text="${user.firstName}+' '+${user.lastName}"></td>
-			   					<td th:text="${user.username}"></td>
 			   					<td th:text="${user.email}"></td>
 			   					<td th:text="${user.phone}"></td>
-			   					<td th:text="${user.getRolesString(user.roles)}"></td>
 			   					<td class="center" >
 			   						<a class="btn-floating btn-small green" th:href="'/admin/activate-user/'+${user.userId}" ><i class="material-icons">power_settings_new</i></a>
 			   					</td>
 							</tr>
 				        </tbody>
 			      	</table>
-			      	<h5 th:if="${#lists.isEmpty(deactiveUsers)}" class="center" >There is no deactivated users!</h5>		   		    	     
 			      	
 			    </div>		    
 			</div>		
