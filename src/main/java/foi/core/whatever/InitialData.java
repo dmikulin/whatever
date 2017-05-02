@@ -60,7 +60,6 @@ public class InitialData implements ApplicationRunner {
 		if(productService.findAll().size()==0){
 			loadInitialProducts();
 		}
-		yaasServices.getAllProducts();
 	}
 
 	private void loadInitialCategories() {
