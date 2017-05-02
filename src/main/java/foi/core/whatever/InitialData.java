@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import org.apache.http.client.ClientProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -29,18 +30,21 @@ public class InitialData implements ApplicationRunner {
 
 	@Autowired
 	private RoleService roleService;	
-	
+
 	@Autowired
 	private ProductService productService;	
-	
+
 	@Autowired
 	private CartService cartService;
-	
+
 	@Autowired
 	private ProductCategoryService productCategoryService;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Autowired
+	YaaSServices yaasServices;
 
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {
@@ -56,28 +60,27 @@ public class InitialData implements ApplicationRunner {
 		if(productService.findAll().size()==0){
 			loadInitialProducts();
 		}	
-
 	}
 
 	private void loadInitialCategories() {
 		ProductCategory category = new ProductCategory();
 		category.setName("Zacin");
 		productCategoryService.save(category);
-		
+
 		category = new ProductCategory();
 		category.setName("Cokolada");
 		productCategoryService.save(category);
-		
+
 		category = new ProductCategory();
 		category.setName("Vitaminski napitak");
 		productCategoryService.save(category);
-		
+
 		category = new ProductCategory();
 		category.setName("Keksi");
 		productCategoryService.save(category);
 	}
 
-	private void loadInitialProducts() {
+	private void loadInitialProducts() throws ClientProtocolException, IOException {
 		Product product = new Product();
 		product.setProductNumber("5d105039");
 		product.setName("Vegeta - Podravka 1kg");
@@ -87,6 +90,8 @@ public class InitialData implements ApplicationRunner {
 		product.setPriceUSD(3.65);
 		productService.save(product);
 
+		yaasServices.newProduct(product);
+
 		product = new Product();
 		product.setProductNumber("223d4a39");
 		product.setName("Mliječna čokolada - Dorina 250g");
@@ -95,7 +100,9 @@ public class InitialData implements ApplicationRunner {
 		product.setPriceEUR(2.95);
 		product.setPriceUSD(3.20);
 		productService.save(product);
-		
+
+		yaasServices.newProduct(product);
+
 		product = new Product();
 		product.setProductNumber("40e4667c");
 		product.setName("Cedevita okus limun 1kg");
@@ -104,7 +111,9 @@ public class InitialData implements ApplicationRunner {
 		product.setPriceEUR(5.35);
 		product.setPriceUSD(5.83);
 		productService.save(product);
-		
+
+		yaasServices.newProduct(product);
+
 		product = new Product();
 		product.setProductNumber("f0b55c7c");
 		product.setName("Napolitanke s čokoladnim punjenjem - Kraš 840g");
@@ -113,9 +122,12 @@ public class InitialData implements ApplicationRunner {
 		product.setPriceEUR(3.36);
 		product.setPriceUSD(3.67);
 		productService.save(product);
+
+		yaasServices.newProduct(product);
+
 	}
 
-	private void loadInitialUsers() {
+	private void loadInitialUsers() throws ClientProtocolException, IOException {
 		ClassLoader classLoader = getClass().getClassLoader();
 
 		File file = new File(classLoader.getResource("static/img/admin-avatar.png").getFile());
@@ -129,7 +141,7 @@ public class InitialData implements ApplicationRunner {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		User user = new User();
 		user.setEmail("admin@email.com");
 		user.setFirstName("Adminko");
@@ -140,12 +152,14 @@ public class InitialData implements ApplicationRunner {
 		user.addRoles(roleService.findByRoleName("Admin"));
 		user.addRoles(roleService.findByRoleName("User"));
 		user.setAvatar(byteFile);
-		userService.save(user);		
-		
+		userService.save(user);	
+
+		yaasServices.newCustomer(user);
+
 		Cart cart = new Cart();
 		cart.setUser(user);
 		cartService.save(cart);
-		
+
 		file = new File(classLoader.getResource("static/img/default-avatar.png").getFile());
 		byte[] byteFile1 = new byte[(int)file.length()];
 
@@ -156,7 +170,7 @@ public class InitialData implements ApplicationRunner {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		user = new User();
 		user.setEmail("ihorvat@email.com");
 		user.setFirstName("Ivan");
@@ -167,7 +181,9 @@ public class InitialData implements ApplicationRunner {
 		user.addRoles(roleService.findByRoleName("User"));
 		user.setAvatar(byteFile1);
 		userService.save(user);
-		
+
+		yaasServices.newCustomer(user);
+
 		cart = new Cart();
 		cart.setUser(user);
 		cartService.save(cart);
