@@ -37,7 +37,6 @@ public class YaaSServices {
 	}
 
 	public void newProduct(Product product) throws ClientProtocolException, IOException{
-
 		String json = "{\"id\":\"" + product.getProductNumber() + "\",";
 		json += "\"name\":\"" + product.getName() + "\",";
 		json += "\"code\":\"" + product.getProductNumber() + "\",";
@@ -61,7 +60,6 @@ public class YaaSServices {
 	}
 
 	public List<Product> getAllProducts() throws ClientProtocolException, IOException{
-
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet get = new HttpGet(PRODUCT_DETAILS_SERVICE);
 
@@ -76,7 +74,6 @@ public class YaaSServices {
 	}
 
 	public void newPrice(Product product) throws ClientProtocolException, IOException{	
-
 		String json = "{\"productId\":\"" + product.getProductNumber() + "\",";
 		json += "\"originalAmount\":" + product.getPriceEUR() + ",";
 		json += "\"currency\":\"EUR\"}";
@@ -95,7 +92,6 @@ public class YaaSServices {
 	}
 
 	public void newCategory(ProductCategory category) throws ClientProtocolException, IOException{	
-
 		String json = "{\"code\":\"" + category.getName().toLowerCase() + "\",";
 		json += "\"name\":{\"en\":\"" + category.getName() + "\"},";
 		json += "\"published\":true}";
@@ -114,7 +110,6 @@ public class YaaSServices {
 	}
 
 	public String newCustomer(User user) throws ClientProtocolException, IOException{	
-
 		String json = "{\"firstName\":\"" + user.getFirstName() + "\",";
 		json += "\"lastName\":\"" + user.getLastName() + "\",";
 		json += "\"contactEmail\":\"" + user.getEmail() + "\",";
@@ -146,7 +141,6 @@ public class YaaSServices {
 	}
 
 	public List<User> getAllUsers() throws ClientProtocolException, IOException{
-
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet get = new HttpGet(CUSTOMER_SERVICE);
 
@@ -162,7 +156,6 @@ public class YaaSServices {
 
 
 	public String newCart(Cart cart) throws ClientProtocolException, IOException{	
-
 		String json = "{\"customerId\":\"" + cart.getUser().getYaasId() + "\",";
 		json += "\"sessionValidated\":true,";
 		json += "\"currency\":\"EUR\"}";
@@ -180,8 +173,6 @@ public class YaaSServices {
 		System.out.println("Response status: "+  response.getStatusLine().getStatusCode());
 
 		String jsonString = EntityUtils.toString(response.getEntity());
-
-		System.out.println("Cart: "+  jsonString);
 
 		String cartId="";
 		try {
