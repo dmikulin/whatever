@@ -166,9 +166,8 @@ public class InitialData implements ApplicationRunner {
 
 		Cart cart = new Cart();
 		cart.setUser(user);
+		cart.setYaasId(yaasServices.newCart(cart));
 		cartService.save(cart);
-
-		yaasServices.newCart(cart);
 
 		file = new File(classLoader.getResource("static/img/default-avatar.png").getFile());
 		byte[] byteFile1 = new byte[(int)file.length()];
@@ -195,9 +194,8 @@ public class InitialData implements ApplicationRunner {
 
 		cart = new Cart();
 		cart.setUser(user);
+		cart.setYaasId(yaasServices.newCart(cart));
 		cartService.save(cart);
-
-		yaasServices.newCart(cart);
 
 	}
 

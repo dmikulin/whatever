@@ -23,6 +23,9 @@ public class Cart {
 	@Column(name="cart_id")
 	private int cartId;
 
+	@Column(name="yaas_id")
+	private String yaasId;
+
 	@ManyToOne
 	private User user;
 
@@ -44,6 +47,14 @@ public class Cart {
 
 	public void setCartId(int cartId) {
 		this.cartId = cartId;
+	}
+
+	public String getYaasId() {
+		return yaasId;
+	}
+
+	public void setYaasId(String yaasId) {
+		this.yaasId = yaasId;
 	}
 
 	public User getUser() {

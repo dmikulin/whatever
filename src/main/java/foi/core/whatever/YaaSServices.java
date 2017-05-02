@@ -12,6 +12,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import foi.core.whatever.model.Cart;
@@ -22,7 +24,7 @@ import foi.core.whatever.model.User;
 @Component
 public class YaaSServices {
 
-	private static String TOKEN = "Bearer 021-fb4de8e1-f63a-4a77-a45a-486aa00e88a1";
+	private static String TOKEN = "Bearer 022-d46f2b65-befc-4aec-9d94-feea8c87c330";
 
 	private static String PRODUCT_SERVICE = "https://api.yaas.io/hybris/product/v2/noviprojekt/products";
 	private static String PRODUCT_DETAILS_SERVICE = "https://api.beta.yaas.io/hybris/productdetails/v2/noviprojekt/productdetails";
@@ -57,7 +59,6 @@ public class YaaSServices {
 
 		newPrice(product);
 	}
-
 
 	public List<Product> getAllProducts() throws ClientProtocolException, IOException{
 
@@ -132,12 +133,17 @@ public class YaaSServices {
 
 		System.out.println("Response status: "+  response.getStatusLine().getStatusCode());
 		String jsonString = EntityUtils.toString(response.getEntity());
-		System.out.println("User: "+  jsonString);
 
 		String customerId="";
+		try {
+			JSONObject obj = new JSONObject(jsonString);
+			customerId = obj.getString("id");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
 		return customerId;
 	}
-
 
 	public List<User> getAllUsers() throws ClientProtocolException, IOException{
 
@@ -155,9 +161,10 @@ public class YaaSServices {
 	}
 
 
-	public void newCart(Cart cart) throws ClientProtocolException, IOException{	
+	public String newCart(Cart cart) throws ClientProtocolException, IOException{	
 
 		String json = "{\"customerId\":\"" + cart.getUser().getYaasId() + "\",";
+		json += "\"sessionValidated\":true,";
 		json += "\"currency\":\"EUR\"}";
 
 		HttpClient client = HttpClientBuilder.create().build();
@@ -171,6 +178,20 @@ public class YaaSServices {
 		HttpResponse response = client.execute(post);
 
 		System.out.println("Response status: "+  response.getStatusLine().getStatusCode());
+
+		String jsonString = EntityUtils.toString(response.getEntity());
+
+		System.out.println("Cart: "+  jsonString);
+
+		String cartId="";
+		try {
+			JSONObject obj = new JSONObject(jsonString);
+			cartId = obj.getString("cartId");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return cartId;
 	}
 
 }
