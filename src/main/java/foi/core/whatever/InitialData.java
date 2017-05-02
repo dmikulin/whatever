@@ -44,7 +44,7 @@ public class InitialData implements ApplicationRunner {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
-	YaaSServices yaasServices;
+	private YaaSServices yaasServices;
 
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {

@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import foi.core.whatever.model.Cart;
+import foi.core.whatever.model.CartItems;
 import foi.core.whatever.model.Product;
 import foi.core.whatever.model.ProductCategory;
 import foi.core.whatever.model.User;
@@ -27,7 +28,7 @@ import foi.core.whatever.model.User;
 @Component
 public class YaaSServices {
 
-	private static String TOKEN = "Bearer 022-7c5c3b34-6200-4df1-a130-5b1c101eb339";
+	private static String TOKEN = "Bearer 022-8f5369ea-8ed8-4e0c-b875-7a88e6065eec";
 
 	private static String PRODUCT_SERVICE = "https://api.yaas.io/hybris/product/v2/noviprojekt/products";
 	private static String PRODUCT_DETAILS_SERVICE = "https://api.beta.yaas.io/hybris/productdetails/v2/noviprojekt/productdetails";
@@ -232,6 +233,59 @@ public class YaaSServices {
 		}
 
 		return cartId;
+	}
+	
+	public void addItemToCart(Product product, String cartId) throws ClientProtocolException, IOException{	
+		String json = "{\"price\":{\"originalAmount\":" + product.getPriceEUR() + ",";
+		json += "\"priceId\":\"5908d39517679f000db41f21\",";
+		json += "\"effectiveAmount\":"+ product.getPriceEUR() + ",";
+		json += "\"currency\":\"EUR\"},";
+		json += "\"quantity\":1,";
+		json += "\"product\":{";
+		json += "\"id\":\""+product.getProductNumber()+"\",";
+		json += "\"name\":\""+product.getName()+"\",";
+		json += "\"description\":\""+product.getDescription()+"\"}}";
+		
+		System.out.println("JSON:"+json);
+
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpPost post = new HttpPost(CART_SERVICE+"/"+cartId+"/items");
+
+		post.setHeader("Authorization", TOKEN);
+		post.setHeader("Content-Type", "application/json");
+
+		HttpEntity entity = new ByteArrayEntity(json.getBytes("UTF-8"));
+		post.setEntity(entity);
+		HttpResponse response = client.execute(post);
+
+		System.out.println("[NEW ITEM IN CART] Response Status: "+  response.getStatusLine().getStatusCode());
+
+	}
+	
+	public List<CartItems> getItemsFromCart(String cartId) throws ClientProtocolException, IOException, JSONException{	
+		
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpGet get = new HttpGet(CART_SERVICE+"/"+cartId+"/items");
+
+		get.setHeader("Authorization", TOKEN);
+		HttpResponse response = client.execute(get);
+
+		String jsonString = EntityUtils.toString(response.getEntity());
+		System.out.println("All items: "+  jsonString);
+		
+		List<CartItems> items = new ArrayList<>();
+		JSONArray jsonItems = new JSONArray(jsonString);
+		for (int i = 0; i < jsonItems.length(); i++) {
+			CartItems item = new CartItems();
+		    JSONObject jsonItem = jsonItems.getJSONObject(i);
+		    item.setPrice(jsonItem.getJSONObject("price").getDouble("originalAmount"));
+		    item.setProductId(jsonItem.getJSONObject("product").getString("id"));
+		    item.setProductName(jsonItem.getJSONObject("product").getString("name"));
+		    item.setQuantity(jsonItem.getInt("quantity"));
+		    items.add(item);
+		}
+		return items;
+
 	}
 
 }
