@@ -19,6 +19,7 @@ import foi.core.whatever.model.Receipt;
 import foi.core.whatever.model.ReceiptProducts;
 import foi.core.whatever.model.User;
 import foi.core.whatever.services.CartService;
+import foi.core.whatever.services.ReceiptProductService;
 import foi.core.whatever.services.ReceiptService;
 import foi.core.whatever.services.UserService;
 
@@ -36,6 +37,9 @@ public class SmartShoppingController {
 
 	@Autowired
 	private ReceiptService receiptService;
+
+	@Autowired
+	private ReceiptProductService receiptProductService;
 
 	@RequestMapping(value = "/smart-shopping", method = RequestMethod.GET)
 	public String getSmartShop(Model model) {
@@ -67,6 +71,7 @@ public class SmartShoppingController {
 				product.setQuantity(item.getQuantity());
 				products.add(product);
 				total+=item.getPrice()*item.getQuantity();
+				receiptProductService.save(product);
 			}
 			receipt.setReceiptProducts(products);
 			receipt.setTotal(total);
