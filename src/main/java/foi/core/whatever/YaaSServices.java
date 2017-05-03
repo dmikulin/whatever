@@ -16,6 +16,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import foi.core.whatever.model.Cart;
@@ -23,12 +24,17 @@ import foi.core.whatever.model.CartItems;
 import foi.core.whatever.model.Product;
 import foi.core.whatever.model.ProductCategory;
 import foi.core.whatever.model.User;
+import foi.core.whatever.services.ProductService;
+import foi.core.whatever.services.TokenService;
 
 @Component
 public class YaaSServices {
 
-	private static String TOKEN = "Bearer 021-bb9b674c-97b0-423a-9eb5-71e919d75c0b";
-
+	@Autowired
+	TokenService tokenService;
+	
+	private String TOKEN; 
+	
 	private static String PRODUCT_SERVICE = "https://api.yaas.io/hybris/product/v2/noviprojekt/products";
 	private static String PRODUCT_DETAILS_SERVICE = "https://api.beta.yaas.io/hybris/productdetails/v2/noviprojekt/productdetails";
 	private static String PRICE_SERVICE = "https://api.beta.yaas.io/hybris/price/v1/noviprojekt/prices";
@@ -40,6 +46,7 @@ public class YaaSServices {
 	}
 
 	public void newProduct(Product product) throws Exception{
+		TOKEN = tokenService.findByTokenId(1).getYaasToken();
 		String json = "{\"id\":\"" + product.getProductNumber() + "\",";
 		json += "\"name\":\"" + product.getName() + "\",";
 		json += "\"code\":\"" + product.getProductNumber() + "\",";
@@ -63,6 +70,7 @@ public class YaaSServices {
 	}
 
 	public List<Product> getAllProducts() throws Exception{
+		TOKEN = tokenService.findByTokenId(1).getYaasToken();
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet get = new HttpGet(PRODUCT_DETAILS_SERVICE);
 
@@ -95,6 +103,7 @@ public class YaaSServices {
 	}
 
 	public void newPrice(Product product) throws Exception{	
+		TOKEN = tokenService.findByTokenId(1).getYaasToken();
 		String json = "{\"productId\":\"" + product.getProductNumber() + "\",";
 		json += "\"originalAmount\":" + product.getPriceEUR() + ",";
 		json += "\"currency\":\"EUR\"}";
@@ -113,6 +122,7 @@ public class YaaSServices {
 	}
 
 	public void newCategory(ProductCategory category) throws Exception{	
+		TOKEN = tokenService.findByTokenId(1).getYaasToken();
 		String json = "{\"code\":\"" + category.getName().toLowerCase() + "\",";
 		json += "\"name\":{\"en\":\"" + category.getName() + "\"},";
 		json += "\"published\":true}";
@@ -131,6 +141,7 @@ public class YaaSServices {
 	}
 
 	public String newCustomer(User user) throws Exception{	
+		TOKEN = tokenService.findByTokenId(1).getYaasToken();
 		String json = "{\"firstName\":\"" + user.getFirstName() + "\",";
 		json += "\"lastName\":\"" + user.getLastName() + "\",";
 		json += "\"contactEmail\":\"" + user.getEmail() + "\",";
@@ -182,6 +193,7 @@ public class YaaSServices {
 	}
 
 	public List<User> getAllUsers() throws Exception{
+		TOKEN = tokenService.findByTokenId(1).getYaasToken();
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet get = new HttpGet(CUSTOMER_SERVICE);
 
@@ -215,6 +227,7 @@ public class YaaSServices {
 
 
 	public String newCart(Cart cart) throws Exception{	
+		TOKEN = tokenService.findByTokenId(1).getYaasToken();
 		String json = "{\"customerId\":\"" + cart.getUser().getYaasId() + "\",";
 		json += "\"sessionValidated\":true,";
 		json += "\"currency\":\"EUR\"}";
@@ -245,6 +258,7 @@ public class YaaSServices {
 	}
 
 	public void addItemToCart(Product product, String cartId) throws Exception{	
+		TOKEN = tokenService.findByTokenId(1).getYaasToken();
 		String json = "{\"price\":{\"originalAmount\":" + product.getPriceEUR() + ",";
 		json += "\"priceId\":\"5908d39517679f000db41f21\",";
 		json += "\"effectiveAmount\":"+ product.getPriceEUR() + ",";
@@ -272,7 +286,8 @@ public class YaaSServices {
 	}
 
 	public List<CartItems> getItemsFromCart(String cartId) throws Exception {	
-
+		TOKEN = tokenService.findByTokenId(1).getYaasToken();
+		
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet get = new HttpGet(CART_SERVICE+"/"+cartId+"/items");
 
@@ -303,6 +318,7 @@ public class YaaSServices {
 	}
 
 	public void deleteItemsFromCart(String cartId) throws Exception {
+		TOKEN = tokenService.findByTokenId(1).getYaasToken();
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpDelete delete = new HttpDelete(CART_SERVICE+"/"+cartId+"/items");
 

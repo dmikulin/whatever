@@ -1,11 +1,9 @@
 package foi.core.whatever.controllers;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.http.client.ClientProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +39,7 @@ public class NewProductController {
 	}
 
 	@RequestMapping(value = "/new-product", method = RequestMethod.POST)
-	public String SignUpUser(HttpServletRequest request, Model model) throws ClientProtocolException, IOException {
+	public String SignUpUser(HttpServletRequest request, Model model) throws Exception {
 		
 		ProductCategory category = productCategoryService.findByCategoryId(Integer.parseInt(request.getParameter("productCategory")));
 		
@@ -54,7 +52,7 @@ public class NewProductController {
 		product.setPriceUSD( Double.parseDouble(request.getParameter("price_USD")));
 		productService.save(product);
 		
-		//yaasServices.newProduct(product);
+		yaasServices.newProduct(product);
 		
 		return "redirect:product-list";
 	}

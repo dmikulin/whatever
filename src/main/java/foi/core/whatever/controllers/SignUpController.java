@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import foi.core.whatever.YaaSServices;
 import foi.core.whatever.model.Cart;
 import foi.core.whatever.model.Role;
 import foi.core.whatever.model.User;
@@ -37,7 +38,10 @@ public class SignUpController {
 
 	@Autowired
 	RoleService roleService;
-
+	
+	@Autowired
+	YaaSServices yaasServices;
+	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
@@ -54,7 +58,7 @@ public class SignUpController {
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public String SignUpUser(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model) {
+	public String SignUpUser(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model) throws Exception {
 
 		byte[] byteFile= null;
 		FileInputStream fis;
@@ -91,10 +95,12 @@ public class SignUpController {
 		user.addRoles(roleService.findByRoleName("User"));
 		user.setAvatar(byteFile);
 		user.setActive(false);
+		user.setYaasId(yaasServices.newCustomer(user));		
 		userService.save(user);
 		
 		Cart cart = new Cart();
 		cart.setUser(user);
+		cart.setYaasId(yaasServices.newCart(cart));
 		cartService.save(cart);
 	
 		return "redirect:login";

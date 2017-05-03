@@ -101,7 +101,7 @@ public class InitialData implements ApplicationRunner {
 		yaasServices.newProduct(product);
 
 		product = new Product();
-		product.setProductNumber("223d4a39");
+		product.setProductNumber("f0b55c7c");
 		product.setName("Mliječna čokolada - Dorina 250g");
 		product.setCategory(productCategoryService.findByName("Cokolada"));
 		product.setDescription("Kraševa vrhunska mliječna čokolada kreirana je za prave poznavatelje slastica. Aromatičnog, bogatog okusa, izrađena od najboljih i najkvalitetnijih sastojaka sinonim je za kvalitetu kojoj generacije potrošača neupitno vjeruje.");
@@ -112,7 +112,7 @@ public class InitialData implements ApplicationRunner {
 		yaasServices.newProduct(product);
 
 		product = new Product();
-		product.setProductNumber("40e4667c");
+		product.setProductNumber("223d4a39");
 		product.setName("Cedevita okus limun 1kg");
 		product.setCategory(productCategoryService.findByName("Vitaminski napitak"));
 		product.setDescription("Prirodna aroma - 9 vitamina. Od 1969. Cedevita je vaš omiljeni napitak jedinstvenog okusa i izvor vitamina: C, B2, B6, B12, niacina, pantotenske kiseline i folne kiseline koji doprinose smanjenju umora i iscrpljenosti.");
@@ -123,7 +123,7 @@ public class InitialData implements ApplicationRunner {
 		yaasServices.newProduct(product);
 
 		product = new Product();
-		product.setProductNumber("f0b55c7c");
+		product.setProductNumber("40e4667c");
 		product.setName("Napolitanke s čokoladnim punjenjem - Kraš 840g");
 		product.setCategory(productCategoryService.findByName("Keksi"));
 		product.setDescription("Vrhunska kombinacija prhkih vafl listova i slasne kreme od čokolade rezultat je Kraševog dugogodišnjeg iskustva i tradicije u proizvodnji vafl proizvoda.");
