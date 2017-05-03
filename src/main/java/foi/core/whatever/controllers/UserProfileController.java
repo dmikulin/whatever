@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import foi.core.whatever.YaaSServices;
 import foi.core.whatever.model.User;
 import foi.core.whatever.services.UserService;
 
@@ -24,7 +25,10 @@ public class UserProfileController {
 
 	@Autowired
 	private UserService userService;
-	
+
+	@Autowired
+	private YaaSServices yaaSServices;
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -40,7 +44,7 @@ public class UserProfileController {
 	}
 
 	@RequestMapping(value = "/edit-profile", method = RequestMethod.POST)
-	public String editProfile(HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String editProfile(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findByUsername(auth.getName());
@@ -78,6 +82,8 @@ public class UserProfileController {
 		user.setEmail(email);
 		user.setUsername(username);
 		userService.save(user);
+
+		yaaSServices.editCustomer(user);
 
 		if (usernameChanged) {
 			if (auth != null){    

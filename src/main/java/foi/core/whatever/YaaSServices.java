@@ -1,12 +1,10 @@
 package foi.core.whatever;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPatch;
@@ -40,7 +38,7 @@ public class YaaSServices {
 	private YaaSServices() {
 	}
 
-	public void newProduct(Product product) throws ClientProtocolException, IOException{
+	public void newProduct(Product product) throws Exception{
 		String json = "{\"id\":\"" + product.getProductNumber() + "\",";
 		json += "\"name\":\"" + product.getName() + "\",";
 		json += "\"code\":\"" + product.getProductNumber() + "\",";
@@ -63,7 +61,7 @@ public class YaaSServices {
 		newPrice(product);
 	}
 
-	public List<Product> getAllProducts() throws ClientProtocolException, IOException, JSONException{
+	public List<Product> getAllProducts() throws Exception{
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet get = new HttpGet(PRODUCT_DETAILS_SERVICE);
 
@@ -72,16 +70,21 @@ public class YaaSServices {
 
 		String jsonString = EntityUtils.toString(response.getEntity());
 		System.out.println("All products: "+  jsonString);
-		
+
 		List<Product> products = new ArrayList<>();
-		JSONArray jsonProducts = new JSONArray(jsonString);
+		JSONArray jsonProducts;
+		try {
+			jsonProducts = new JSONArray(jsonString);
+		} catch (JSONException e) {
+			return null;
+		}
 		for (int i = 0; i < jsonProducts.length(); i++) {
 			Product product = new Product();
-		    JSONObject jsonProduct = jsonProducts.getJSONObject(i).getJSONObject("product");
-		    product.setProductNumber(jsonProduct.getString("code"));
-		    product.setName(jsonProduct.getJSONObject("name").getString("en"));
-		    product.setDescription(jsonProduct.getJSONObject("description").getString("en"));
-		    JSONArray jsonPrices = jsonProducts.getJSONObject(i).getJSONArray("prices");
+			JSONObject jsonProduct = jsonProducts.getJSONObject(i).getJSONObject("product");
+			product.setProductNumber(jsonProduct.getString("code"));
+			product.setName(jsonProduct.getJSONObject("name").getString("en"));
+			product.setDescription(jsonProduct.getJSONObject("description").getString("en"));
+			JSONArray jsonPrices = jsonProducts.getJSONObject(i).getJSONArray("prices");
 			for (int j = 0; j < jsonPrices.length(); j++) {
 				product.setPriceEUR(jsonPrices.getJSONObject(j).getDouble("originalAmount"));
 			}
@@ -90,7 +93,7 @@ public class YaaSServices {
 		return products;
 	}
 
-	public void newPrice(Product product) throws ClientProtocolException, IOException{	
+	public void newPrice(Product product) throws Exception{	
 		String json = "{\"productId\":\"" + product.getProductNumber() + "\",";
 		json += "\"originalAmount\":" + product.getPriceEUR() + ",";
 		json += "\"currency\":\"EUR\"}";
@@ -108,7 +111,7 @@ public class YaaSServices {
 		System.out.println("[NEW PRICE] Response Status: "+  response.getStatusLine().getStatusCode());
 	}
 
-	public void newCategory(ProductCategory category) throws ClientProtocolException, IOException{	
+	public void newCategory(ProductCategory category) throws Exception{	
 		String json = "{\"code\":\"" + category.getName().toLowerCase() + "\",";
 		json += "\"name\":{\"en\":\"" + category.getName() + "\"},";
 		json += "\"published\":true}";
@@ -126,7 +129,7 @@ public class YaaSServices {
 		System.out.println("[NEW CATEGORY] Response Status: "+  response.getStatusLine().getStatusCode());
 	}
 
-	public String newCustomer(User user) throws ClientProtocolException, IOException{	
+	public String newCustomer(User user) throws Exception{	
 		String json = "{\"firstName\":\"" + user.getFirstName() + "\",";
 		json += "\"lastName\":\"" + user.getLastName() + "\",";
 		json += "\"contactEmail\":\"" + user.getEmail() + "\",";
@@ -156,8 +159,8 @@ public class YaaSServices {
 
 		return customerId;
 	}
-	
-	public void editCustomer(User user) throws ClientProtocolException, IOException{	
+
+	public void editCustomer(User user) throws Exception{	
 		String json = "{\"firstName\":\"" + user.getFirstName() + "\",";
 		json += "\"lastName\":\"" + user.getLastName() + "\",";
 		json += "\"contactEmail\":\"" + user.getEmail() + "\",";
@@ -177,7 +180,7 @@ public class YaaSServices {
 		System.out.println("[EDIT CUSTOMER] Response Status: "+  response.getStatusLine().getStatusCode());
 	}
 
-	public List<User> getAllUsers() throws ClientProtocolException, IOException, JSONException{
+	public List<User> getAllUsers() throws Exception{
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet get = new HttpGet(CUSTOMER_SERVICE);
 
@@ -186,26 +189,31 @@ public class YaaSServices {
 
 		String jsonString = EntityUtils.toString(response.getEntity());
 		System.out.println("All customers: "+  jsonString);
-		
+
 		List<User> users = new ArrayList<>();
-		JSONArray jsonCustomers = new JSONArray(jsonString);
+		JSONArray jsonCustomers;
+		try {
+			jsonCustomers = new JSONArray(jsonString);
+		} catch (JSONException e) {
+			return null;
+		}
 		for (int i = 0; i < jsonCustomers.length(); i++) {
 			User user = new User();
-		    JSONObject jsonCustomer = jsonCustomers.getJSONObject(i);
-		    user.setFirstName(jsonCustomer.getString("firstName"));
-		    user.setLastName(jsonCustomer.getString("lastName"));
-		    user.setPhone(jsonCustomer.getString("contactPhone"));
-		    user.setEmail(jsonCustomer.getString("contactEmail"));
-		    user.setActive(jsonCustomer.getBoolean("active"));
-		    user.setYaasId(jsonCustomer.getString("id"));
-		    users.add(user);
+			JSONObject jsonCustomer = jsonCustomers.getJSONObject(i);
+			user.setFirstName(jsonCustomer.getString("firstName"));
+			user.setLastName(jsonCustomer.getString("lastName"));
+			user.setPhone(jsonCustomer.getString("contactPhone"));
+			user.setEmail(jsonCustomer.getString("contactEmail"));
+			user.setActive(jsonCustomer.getBoolean("active"));
+			user.setYaasId(jsonCustomer.getString("id"));
+			users.add(user);
 		}
 
 		return users;
 	}
 
 
-	public String newCart(Cart cart) throws ClientProtocolException, IOException{	
+	public String newCart(Cart cart) throws Exception{	
 		String json = "{\"customerId\":\"" + cart.getUser().getYaasId() + "\",";
 		json += "\"sessionValidated\":true,";
 		json += "\"currency\":\"EUR\"}";
@@ -234,8 +242,8 @@ public class YaaSServices {
 
 		return cartId;
 	}
-	
-	public void addItemToCart(Product product, String cartId) throws ClientProtocolException, IOException{	
+
+	public void addItemToCart(Product product, String cartId) throws Exception{	
 		String json = "{\"price\":{\"originalAmount\":" + product.getPriceEUR() + ",";
 		json += "\"priceId\":\"5908d39517679f000db41f21\",";
 		json += "\"effectiveAmount\":"+ product.getPriceEUR() + ",";
@@ -245,7 +253,7 @@ public class YaaSServices {
 		json += "\"id\":\""+product.getProductNumber()+"\",";
 		json += "\"name\":\""+product.getName()+"\",";
 		json += "\"description\":\""+product.getDescription()+"\"}}";
-		
+
 		System.out.println("JSON:"+json);
 
 		HttpClient client = HttpClientBuilder.create().build();
@@ -261,9 +269,9 @@ public class YaaSServices {
 		System.out.println("[NEW ITEM IN CART] Response Status: "+  response.getStatusLine().getStatusCode());
 
 	}
-	
-	public List<CartItems> getItemsFromCart(String cartId) throws ClientProtocolException, IOException, JSONException{	
-		
+
+	public List<CartItems> getItemsFromCart(String cartId) throws Exception {	
+
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet get = new HttpGet(CART_SERVICE+"/"+cartId+"/items");
 
@@ -272,17 +280,22 @@ public class YaaSServices {
 
 		String jsonString = EntityUtils.toString(response.getEntity());
 		System.out.println("All items: "+  jsonString);
-		
+
 		List<CartItems> items = new ArrayList<>();
-		JSONArray jsonItems = new JSONArray(jsonString);
+		JSONArray jsonItems;
+		try {
+			jsonItems = new JSONArray(jsonString);
+		} catch (JSONException e) {
+			return null;
+		}
 		for (int i = 0; i < jsonItems.length(); i++) {
 			CartItems item = new CartItems();
-		    JSONObject jsonItem = jsonItems.getJSONObject(i);
-		    item.setPrice(jsonItem.getJSONObject("price").getDouble("originalAmount"));
-		    item.setProductId(jsonItem.getJSONObject("product").getString("id"));
-		    item.setProductName(jsonItem.getJSONObject("product").getString("name"));
-		    item.setQuantity(jsonItem.getInt("quantity"));
-		    items.add(item);
+			JSONObject jsonItem = jsonItems.getJSONObject(i);
+			item.setPrice(jsonItem.getJSONObject("price").getDouble("originalAmount"));
+			item.setProductId(jsonItem.getJSONObject("product").getString("id"));
+			item.setProductName(jsonItem.getJSONObject("product").getString("name"));
+			item.setQuantity(jsonItem.getInt("quantity"));
+			items.add(item);
 		}
 		return items;
 

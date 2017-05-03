@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import org.apache.http.client.ClientProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -62,7 +61,7 @@ public class InitialData implements ApplicationRunner {
 		}
 	}
 
-	private void loadInitialCategories() throws ClientProtocolException, IOException {
+	private void loadInitialCategories() throws Exception {
 		ProductCategory category = new ProductCategory();
 		category.setName("Zacin");
 		productCategoryService.save(category);
@@ -89,7 +88,7 @@ public class InitialData implements ApplicationRunner {
 
 	}
 
-	private void loadInitialProducts() throws ClientProtocolException, IOException {
+	private void loadInitialProducts() throws Exception{
 		Product product = new Product();
 		product.setProductNumber("5d105039");
 		product.setName("Vegeta - Podravka 1kg");
@@ -136,7 +135,7 @@ public class InitialData implements ApplicationRunner {
 
 	}
 
-	private void loadInitialUsers() throws ClientProtocolException, IOException {
+	private void loadInitialUsers() throws Exception {
 		ClassLoader classLoader = getClass().getClassLoader();
 
 		File file = new File(classLoader.getResource("static/img/admin-avatar.png").getFile());

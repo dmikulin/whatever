@@ -1,12 +1,10 @@
 package foi.core.whatever;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import org.apache.http.client.ClientProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -21,7 +19,7 @@ import foi.core.whatever.services.UserService;
 
 @Component
 public class ServerSocketClass implements ApplicationRunner {
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -30,10 +28,10 @@ public class ServerSocketClass implements ApplicationRunner {
 
 	@Autowired
 	private CartService cartService;
-	
+
 	@Autowired
 	private YaaSServices yaasServices;
-	
+
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {
 
@@ -63,7 +61,7 @@ public class ServerSocketClass implements ApplicationRunner {
 		}
 	}
 
-	private void handleRequest(String productNumber) throws ClientProtocolException, IOException {
+	private void handleRequest(String productNumber) throws Exception {
 		User user = userService.findByUsername("admin");
 		Cart cart = cartService.findByUser(user);
 		Product product = productService.findByProductNumber(productNumber);

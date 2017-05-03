@@ -1,12 +1,9 @@
 package foi.core.whatever.controllers;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.http.client.ClientProtocolException;
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,12 +27,12 @@ public class CartController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private YaaSServices yaasServices;
 
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
-	public String productListPage(HttpServletRequest request, Model model) throws ClientProtocolException, IOException, JSONException {
+	public String productListPage(HttpServletRequest request, Model model) throws Exception{
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getName();
@@ -44,10 +41,12 @@ public class CartController {
 
 		List<CartItems> items = yaasServices.getItemsFromCart(cart.getYaasId());
 		double total=0;
-		for(CartItems item : items){
-			total+=item.getPrice()*item.getQuantity();
+		if(items!=null){
+			for(CartItems item : items){
+				total+=item.getPrice()*item.getQuantity();
+			}
 		}		
-		
+
 		model.addAttribute("items", items);
 		model.addAttribute("total", total);
 
@@ -55,7 +54,7 @@ public class CartController {
 	}
 
 	@RequestMapping(value = "/admin/cart", method = RequestMethod.GET)
-	public String productListPageAdmin(HttpServletRequest request, Model model) throws ClientProtocolException, IOException, JSONException {
+	public String productListPageAdmin(HttpServletRequest request, Model model) throws Exception{
 		return productListPage(request, model);
 	}
 
