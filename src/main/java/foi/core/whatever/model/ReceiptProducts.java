@@ -1,50 +1,84 @@
 package foi.core.whatever.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "receipt_products")
-public class ReceiptProducts implements Serializable{
+public class ReceiptProducts {
 
+	@Id
+	@GeneratedValue
+	@NotNull
+	@Column(name="id")
+	private int id;
+
+	@ManyToOne
 	private Receipt receipt;
-	private Product product;
+
+	@Column(name="price")
+	private double price;
+
+	@Column(name="product_id")
+	private String productId;
+
+	@Column(name="product_name")
+	private String productName;
+
+	@Column(name="quantity")
 	private int quantity;
-	
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "receipt_id")
+
+	public ReceiptProducts() {
+		super();
+	}
+
 	public Receipt getReceipt() {
 		return receipt;
 	}
 	public void setReceipt(Receipt receipt) {
 		this.receipt = receipt;
 	}
-	
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-	public Product getProduct() {
-		return product;
+
+	public double getPrice() {
+		return price;
 	}
-	public void setProduct(Product product) {
-		this.product = product;
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
-	
-    @Column(name = "quantity")
+
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
 	public int getQuantity() {
 		return quantity;
 	}
+
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
+
+
+
+
 
 
 }

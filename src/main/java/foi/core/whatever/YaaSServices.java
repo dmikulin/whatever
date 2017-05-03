@@ -26,7 +26,7 @@ import foi.core.whatever.model.User;
 @Component
 public class YaaSServices {
 
-	private static String TOKEN = "Bearer 022-8f5369ea-8ed8-4e0c-b875-7a88e6065eec";
+	private static String TOKEN = "Bearer 022-4cb8cc13-29ee-4e6c-b7ac-1019028ebcc5";
 
 	private static String PRODUCT_SERVICE = "https://api.yaas.io/hybris/product/v2/noviprojekt/products";
 	private static String PRODUCT_DETAILS_SERVICE = "https://api.beta.yaas.io/hybris/productdetails/v2/noviprojekt/productdetails";

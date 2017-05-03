@@ -24,7 +24,7 @@ public class ProductCategory {
 	private String name;
 	@Column(name="description")
 	private String description;
-	
+
 	@OneToMany(mappedBy="category")
 	private List<Product> products = new ArrayList<Product>();
 
@@ -47,7 +47,6 @@ public class ProductCategory {
 	public String getDescription() {
 		return description;
 	}
-
 
 	public void setDescription(String description) {
 		this.description = description;

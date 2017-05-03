@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,7 +31,7 @@ public class Receipt {
 	@Column(name="total")
 	private double total;
 
-	@OneToMany(mappedBy = "receipt", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "receipt")
 	private List<ReceiptProducts> receiptProducts;
 
 	@Column(name="active")

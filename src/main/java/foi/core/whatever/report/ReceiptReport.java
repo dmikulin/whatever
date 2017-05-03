@@ -25,9 +25,9 @@ public class ReceiptReport {
 			List<Map<String,?>> products = new ArrayList<Map<String,?>>();
 			for (ReceiptProducts receiptProduct : receipt.getReceiptProducts()) {
 				Map<String,Object> product = new HashMap<String,Object>();
-				product.put("productNumber", receiptProduct.getProduct().getProductNumber());
-				product.put("productName", receiptProduct.getProduct().getName());
-				product.put("productPrice", receiptProduct.getProduct().getPriceEUR());
+				product.put("productNumber", receiptProduct.getProductId());
+				product.put("productName", receiptProduct.getProductName());
+				product.put("productPrice", receiptProduct.getPrice());
 				product.put("quantity", receiptProduct.getQuantity());
 				products.add(product);
 			}

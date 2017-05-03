@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -34,9 +33,6 @@ public class Product {
 	@ManyToMany(mappedBy="products")
 	private Set<Cart> carts;
 
-	@OneToMany(mappedBy = "product")
-	private Set<ReceiptProducts> receiptProducts;
-
 	@ManyToOne
 	private ProductCategory category;
 
@@ -47,7 +43,6 @@ public class Product {
 		super();
 		setActive(true);
 		carts = new HashSet<>();
-		receiptProducts = new HashSet<>();
 	}
 
 	public int getProductId() {
@@ -123,14 +118,6 @@ public class Product {
 
 	public void setCarts(Set<Cart> carts) {
 		this.carts = carts;
-	}
-
-	public Set<ReceiptProducts> getReceiptProducts() {
-		return receiptProducts;
-	}
-
-	public void setReceiptProducts(Set<ReceiptProducts> receiptProducts) {
-		this.receiptProducts = receiptProducts;
 	}
 
 
