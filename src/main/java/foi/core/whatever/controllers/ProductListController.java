@@ -17,6 +17,7 @@ import foi.core.whatever.services.ProductService;
 @Controller
 public class ProductListController {
 
+
 	@Autowired
 	private ProductService productService;
 

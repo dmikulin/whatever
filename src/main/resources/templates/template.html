@@ -24,6 +24,8 @@
 			<li sec:authorize="isAuthenticated()" class="divider"></li>
 			<li sec:authorize="isAuthenticated()"><a class="cyan-text text-lighten-5" href="/smart-shopping" id="smart-shopping">Smart Shop</a></li>
 			<li sec:authorize="isAuthenticated()" class="divider"></li>
+			<li sec:authorize="isAuthenticated()"><a class="cyan-text text-lighten-5" href="/receipt-list" id="receipt-list" >My Receipts</a></li>
+			<li sec:authorize="isAuthenticated()" class="divider"></li>
 			<li sec:authorize="isAnonymous()"><a class="cyan-text text-lighten-5" href="/login" >Log In</a></li>
 			<li sec:authorize="isAnonymous()" class="divider"></li>
 			<li sec:authorize="isAnonymous()"><a class="cyan-text text-lighten-5" href="/signup" >Sign Up</a></li>
@@ -51,6 +53,7 @@
 							<li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/new-product" >New Product</a></li>
 							<li sec:authorize="isAuthenticated()"><a href="/product-list" >Products</a></li>
 							<li sec:authorize="isAuthenticated()"><a href="/smart-shopping" >Smart Shop</a></li>
+							<li sec:authorize="isAuthenticated()"><a href="/receipt-list" >My Receipts</a></li>
 							<li sec:authorize="isAnonymous()"><a href="/login" >Log In</a></li>
 							<li sec:authorize="isAnonymous()"><a href="/signup" >Sign Up</a></li>
 		          		</ul>

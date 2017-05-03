@@ -9,8 +9,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class SmartShoppingController {
 
 	@RequestMapping(value = "/smart-shopping", method = RequestMethod.GET)
-	public String indexPage(Model model) {
+	public String getSmartShop(Model model) {
 		return "smart-shopping";	
-}
+	}
+
+	@RequestMapping(value = "/smart-shopping-buy", method = RequestMethod.POST)
+	public String payCart(Model model) {
+
+
+		return "smart-shopping";	
+	}
 
 }

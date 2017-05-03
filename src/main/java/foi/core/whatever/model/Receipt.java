@@ -22,16 +22,19 @@ public class Receipt {
 	@NotNull
 	@Column(name="receipt_id")
 	private int receiptId;
-	
+
 	@ManyToOne
 	private User user;
-	
+
 	@Column(name="document_date")
 	private LocalDateTime documentDate;
-	
-    @OneToMany(mappedBy = "receipt", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ReceiptProducts> receiptProducts;
-	
+
+	@Column(name="total")
+	private double total;
+
+	@OneToMany(mappedBy = "receipt", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ReceiptProducts> receiptProducts;
+
 	@Column(name="active")
 	private boolean active;
 
@@ -80,10 +83,20 @@ public class Receipt {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
+
 	public String getTimeString(LocalDateTime dateTime) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 		return dateTime.format(formatter);
 	}
+
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
+	}
+
+
 
 }
