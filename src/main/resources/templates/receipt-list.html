@@ -21,6 +21,7 @@
 			              <th data-field="total" >Total</th>
 			              <th data-field="pdv" >PDV</th>
 			              <th data-field="total-pdv" >Total+PDV</th>
+			              <th data-field="print" >Print</th>
 			          </tr>
 			        </thead>
 			
@@ -34,6 +35,7 @@
 		   					<td th:text="${#numbers.formatDecimal(receipt.total, 0, 'COMMA', 2, 'POINT')}+'&euro;'"></td>
 		   					<td th:text="${#numbers.formatDecimal(receipt.total*0.25, 0, 'COMMA', 2, 'POINT')}+'&euro;'"></td>
 		   					<td th:text="${#numbers.formatDecimal(receipt.total*1.25, 0, 'COMMA', 2, 'POINT')}+'&euro;'"></td>
+			   				<td ><a class="btn-floating btn-medium waves-effect waves-light blue" target="_blank" th:href="'/receipt-to-pdf/'+${receipt.receiptId}" ><i class="material-icons">print</i></a></td>
 						</tr>
 			        </tbody>
 		      	</table>
