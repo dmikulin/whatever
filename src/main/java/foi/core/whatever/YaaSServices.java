@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
@@ -299,6 +300,14 @@ public class YaaSServices {
 		}
 		return items;
 
+	}
+
+	public void deleteItemsFromCart(String cartId) throws Exception {
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpDelete delete = new HttpDelete(CART_SERVICE+"/"+cartId+"/items");
+
+		delete.setHeader("Authorization", TOKEN);
+		HttpResponse response = client.execute(delete);
 	}
 
 }

@@ -70,6 +70,7 @@ public class SmartShoppingController {
 			}
 			receipt.setReceiptProducts(products);
 			receipt.setTotal(total);
+			yaasServices.deleteItemsFromCart(cart.getYaasId());
 		}
 		receiptService.save(receipt);
 
